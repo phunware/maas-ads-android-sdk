@@ -1,30 +1,31 @@
-TapIt Android SDK
-=================
+MaaSAdvertising Android SDK
+================
 
-Version 1.8.0
+Version 1.0.0
 
-This is the Android SDK for the TapIt! mobile ad network. Go to http://tapit.com/ for more details and to sign up.
+This is the Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
-###[Download TapIt SDK](https://github.com/tapit/TapIt-Android-SDK-Source/raw/master/dist/TapItSDK.zip)<br/>
-###[Example project source](https://github.com/tapit/TapIt-Android-SDK-Source/tree/master/src/example)
+Getting Started
+---------------
+
+- [Download MaaSAdvertising](https://github.com/phunware/maas-ads-android-sdk/archive/master.zip) and run the included sample app.
+- Continue reading below for installation and integration instructions.
+- Be sure to read the [documentation](http://phunware.github.io/maas-ads-android-sdk/) for additional details.
 
 
-Requrements:
+Installation
 ------------
-Android SDK 2.2+ (API level 8) or above
 
+The following libraries are required:
+````
+MaaSCore.jar
+````
 
-Usage:
-------
-*We've streamlined our API as of v1.8.0, but still support previous integrations.
- Check the [Old SDK Docs](https://github.com/tapit/TapIt-Android-SDK-Source/blob/master/README_LEGACY.md)
-for legacy API documentation.*
+MaaSAdvertising has a dependency on MaaSCore.jar which is available here: https://github.com/phunware/maas-core-android-sdk
 
-* To install, extract the [TapIt SDK Archive](https://github.com/tapit/TapIt-Android-SDK-Source/raw/master/dist/TapItSDK.zip) into your project's `/libs` folder, and add `TapItSDK.jar` into the project's build path:
+It's recommended that you add the MaaS libraries to the 'libs' directory. This directory should contain MaaSCore.jar and MaaSMaaSAdvertising.jar  as well as any other MaaS libraries that you are using.
 
-* Set `TapItSDK.jar` to be exported as part of your apk file:
-
-* Update your `AndroidManifest.xml` to include the following permissions and activity:
+Update your `AndroidManifest.xml` to include the following permissions and activity:
 
 ````xml
 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
@@ -38,15 +39,24 @@ for legacy API documentation.*
 
 <!-- inside of the application tag: -->
 <activity
-    android:name="com.tapit.adview.AdActivity"
+    android:name="com.phunware.advertising.internal.PwAdActivity"
     android:configChanges="keyboard|keyboardHidden|orientation" />
 
 ````
-See [AndroidManifest.xml](https://github.com/tapit/TapIt-Android-SDK-Source/blob/master/src/example/AndroidManifest.xml) for an example manifest file.
+See [AndroidManifest.xml](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/AndroidManifest.xml) for an example manifest file.
 
-**NOTE:** Zones correspond to a specific ad type, which is specified through the TapIt dashboard.  Please ensure that you use the correct Zone ID for your ad units or you may experience un-expected results.
 
-A sample project is included in this repo.  See [Example Code](https://github.com/tapit/TapIt-Android-SDK-Source/tree/master/src/example) for a live demo.
+Documentation
+------------
+
+Documentation is included in the Documents folder in the repository as both HTML and .jar.
+
+
+
+Integration
+-----------
+
+The primary methods in MaaSAdvertising revolve displaying the various ad types:
 
 AdPrompt Usage
 --------------
@@ -62,7 +72,7 @@ PwAdPrompt adPrompt = PwAdvertisingModule.get().getAdPromptForZone(this, "YOUR_A
 adPrompt.show();
 ````
 
-Advanced implementation can be found in the [Example Code](https://github.com/tapit/TapIt-Android-SDK-Source/blob/master/src/example/src/com/tapit/example/MyActivity.java)
+Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/phunware/advertising/example/MyActivity.java)
 
 
 Banner Usage
@@ -102,7 +112,7 @@ PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
 bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 ````
 
-Advanced implementation can be found in the [Example Code](https://github.com/tapit/TapIt-Android-SDK-Source/blob/master/src/example/src/com/tapit/example/MyActivity.java)
+Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/phunware/advertising/example/MyActivity.java)
 
 
 Interstitial Usage
@@ -119,7 +129,7 @@ PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdFor
 interstitialAd.show();
 ````
 
-Advanced implementation can be found in the [Example Code](https://github.com/tapit/TapIt-Android-SDK-Source/blob/master/src/example/src/com/tapit/example/MyActivity.java)
+Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/phunware/advertising/example/MyActivity.java)
 
 
 Video Ads Usage
@@ -136,4 +146,11 @@ import com.phunware.advertising.*;
 PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-Advanced implementation can be found in the [Example Code](https://github.com/tapit/TapIt-Android-SDK-Source/blob/master/src/example/src/com/tapit/example/MyActivity.java)
+Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/phunware/advertising/example/MyActivity.java)
+
+
+
+Requirements
+------------
+
+- MaaSCore v1.0.0 or greater.

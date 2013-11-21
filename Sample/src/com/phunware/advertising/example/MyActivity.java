@@ -1,38 +1,68 @@
 package com.phunware.advertising.example;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import com.phunware.advertising.*;
+import com.phunware.core.PwCoreSession;
 
 public class MyActivity extends Activity {
 
     private final static String TAG = "Phunware";
-
-    private final static String BANNER_ZONE_ID = "7979";
-    private final static String VIDEO_ZONE_ID = "7981";
-    private final static String INTRS_ZONE_ID = "7983";
-    private final static String ADPROMPT_ZONE_ID = "7984";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        Resources r = getResources();
+
+        // Initialize MaaS Core
+        PwCoreSession.getInstance().registerKeys(this,
+                r.getString(R.string.app_appid),
+                r.getString(R.string.app_accesskey),
+                r.getString(R.string.app_signaturekey),
+                r.getString(R.string.app_encryptionkey));
+
+        // Register MaaS Advertising module
+        PwCoreSession.getInstance().installModules(PwAdvertisingModule.getInstance());
+
         // test that you've integrated properly
         // NOTE: remove this before your app goes live!
         PwAdvertisingModule.get().validateSetup(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        /*
+         * Start Core Session
+         */
+        PwCoreSession.getInstance().activityStartSession(this);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        /*
+         * Stop Core Session
+         */
+        PwCoreSession.getInstance().activityStopSession(this);
+    }
+
     public void simpleAdPromptExmple() {
-        PwAdPrompt adPrompt = PwAdvertisingModule.get().getAdPromptForZone(this, ADPROMPT_ZONE_ID);
+        String zoneId = getResources().getString(R.string.adprompt_zone_id);
+        PwAdPrompt adPrompt = PwAdvertisingModule.get().getAdPromptForZone(this, zoneId);
         adPrompt.show();
     }
 
     public void advancedAdPromptExample() {
         // generate a customized request
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(ADPROMPT_ZONE_ID)
+        String zoneId = getResources().getString(R.string.adprompt_zone_id);
+        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
                                                    .setTestMode(true)
                                     .getPwAdRequest();
 
@@ -71,14 +101,16 @@ public class MyActivity extends Activity {
 
 
     public void simpleInterstitialExample() {
-        PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdForZone(this, INTRS_ZONE_ID);
+        String zoneId = getResources().getString(R.string.intrs_zone_id);
+        PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdForZone(this, zoneId);
         interstitialAd.show();
     }
 
 
     public void advancedInterstitialExample() {
         // generate a customized request
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(INTRS_ZONE_ID)
+        String zoneId = getResources().getString(R.string.intrs_zone_id);
+        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
                                                                     .setTestMode(true)
                                                         .getPwAdRequest();
 
@@ -116,14 +148,16 @@ public class MyActivity extends Activity {
 
 
     public void simpleVideoExample() {
-        PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, VIDEO_ZONE_ID);
+        String zoneId = getResources().getString(R.string.video_zone_id);
+        PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, zoneId);
         videoAd.show();
     }
 
 
     public void advancedVideoExample() {
         // generate a customized request
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(VIDEO_ZONE_ID)
+        String zoneId = getResources().getString(R.string.video_zone_id);
+        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
                                                                     .setTestMode(true)
                                                         .getPwAdRequest();
 
@@ -162,7 +196,8 @@ public class MyActivity extends Activity {
 
     public void simpleBannerExample() {
         PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
-        bannerAdView.startRequestingAdsForZone(BANNER_ZONE_ID);
+        String zoneId = getResources().getString(R.string.banner_zone_id);
+        bannerAdView.startRequestingAdsForZone(zoneId);
     }
 
     public void advancedBannerExample() {
@@ -170,7 +205,8 @@ public class MyActivity extends Activity {
         PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
 
         // generate a customized request
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(BANNER_ZONE_ID)
+        String zoneId = getResources().getString(R.string.banner_zone_id);
+        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
                                                                     .setTestMode(true)
                                                             .getPwAdRequest();
 
