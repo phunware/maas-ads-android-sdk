@@ -8,7 +8,10 @@ import android.view.View;
 import com.phunware.advertising.*;
 import com.phunware.core.PwCoreSession;
 
-public class MyActivity extends Activity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class AdvertisingSample extends Activity {
 
     private final static String TAG = "Phunware";
 
@@ -201,13 +204,21 @@ public class MyActivity extends Activity {
     }
 
     public void advancedBannerExample() {
+        Log.d(TAG, "advancedBannerExample");
         // find the view in your layout
         PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
 
+        bannerAdView.setAdUpdateInterval(0); // no auto rotation
+
         // generate a customized request
         String zoneId = getResources().getString(R.string.banner_zone_id);
+
+        Map<String, String> params = new HashMap<String, String>(1);
+        params.put("cid", "238409");
+
         PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                                                                    .setTestMode(true)
+//                                                                    .setTestMode(true)
+                                                                    .setCustomParameters(params)
                                                             .getPwAdRequest();
 
         // register for ad lifecycle callbacks
@@ -259,7 +270,7 @@ public class MyActivity extends Activity {
     }
 
     public void fireBanner(View sender) {
-        simpleBannerExample();
-//        advancedBannerExample();
+//        simpleBannerExample();
+        advancedBannerExample();
     }
 }

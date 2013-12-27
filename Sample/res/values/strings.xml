@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PwAdvertising Demo</string>
+    <string name="app_name">Advertising Sample</string>
     <string name="adprompt">AdPrompt</string>
     <string name="interstitial">Interstitial</string>
     <string name="video">Video</string>
