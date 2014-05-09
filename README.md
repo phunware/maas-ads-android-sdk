@@ -1,7 +1,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 1.0.0
+Version 1.1.1
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -10,7 +10,7 @@ This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maa
 Requirements
 ------------
 
-- MaaS Core v1.0.0 or greater
+- MaaS Core v1.3.2 or greater
 
 
 
@@ -70,23 +70,6 @@ Integration
 
 The primary methods in MaaS Advertising involve displaying the various ad types:
 
-### AdPrompt Usage
-
-AdPrompts are a simple ad unit designed to have a native feel. The user is given the option to download an app.
-If they accept, they are taken to the app within the app marketplace.
-
-*Example Usage*
-````java
-import com.phunware.advertising.*;
-
-// ...
-
-PwAdPrompt adPrompt = PwAdvertisingModule.get().getAdPromptForZone(this, "YOUR_ADPROMPT_ZONE_ID");
-adPrompt.show();
-````
-
-Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/phunware/advertising/example/AdvertisingSample.java).
-
 
 ### Banner Usage
 
@@ -121,7 +104,7 @@ import com.phunware.advertising.*;
 
 // ...
 
-PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
+PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAd);
 bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 ````
 

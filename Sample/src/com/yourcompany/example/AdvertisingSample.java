@@ -1,4 +1,4 @@
-package com.phunware.advertising.example;
+package com.yourcompany.example;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -7,18 +7,19 @@ import android.util.Log;
 import android.view.View;
 import com.phunware.advertising.*;
 import com.phunware.core.PwCoreSession;
+import com.phunware.core.PwLog;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class AdvertisingSample extends Activity {
 
-    private final static String TAG = "Phunware";
+    private final static String TAG = "AdvertisingSample";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        PwLog.setShowLog(true);
 
         Resources r = getResources();
 
@@ -56,52 +57,6 @@ public class AdvertisingSample extends Activity {
         PwCoreSession.getInstance().activityStopSession(this);
     }
 
-    public void simpleAdPromptExmple() {
-        String zoneId = getResources().getString(R.string.adprompt_zone_id);
-        PwAdPrompt adPrompt = PwAdvertisingModule.get().getAdPromptForZone(this, zoneId);
-        adPrompt.show();
-    }
-
-    public void advancedAdPromptExample() {
-        // generate a customized request
-        String zoneId = getResources().getString(R.string.adprompt_zone_id);
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                                                   .setTestMode(true)
-                                    .getPwAdRequest();
-
-        // get an ad instance using request
-        PwAdPrompt adPrompt = PwAdvertisingModule.get().getAdPrompt(this, request);
-
-        // register for ad lifecycle callbacks
-        adPrompt.setListener(new PwAdPrompt.PwAdPromptListener() {
-            @Override
-            public void adPromptDidLoad(PwAdPrompt ad) {
-                // show ad as soon as it's loaded
-                Log.d(TAG, "AdPrompt Loaded");
-                ad.show();
-            }
-
-            @Override
-            public void adPromptDisplayed(PwAdPrompt ad) {
-                Log.d(TAG, "Ad Prompt Displayed");
-            }
-
-            @Override
-            public void adPromptDidFail(PwAdPrompt ad, String error) {
-                Log.d(TAG, "Ad Prompt Error: " + error);
-            }
-
-            @Override
-            public void adPromptClosed(PwAdPrompt ad, boolean didAccept) {
-                String btnName = didAccept ? "YES" : "NO";
-                Log.d(TAG, "Ad Prompt Closed with \"" + btnName + "\" button");
-            }
-        });
-
-        // load ad... we'll be notified when it's ready
-        adPrompt.load();
-    }
-
 
     public void simpleInterstitialExample() {
         String zoneId = getResources().getString(R.string.intrs_zone_id);
@@ -113,8 +68,10 @@ public class AdvertisingSample extends Activity {
     public void advancedInterstitialExample() {
         // generate a customized request
         String zoneId = getResources().getString(R.string.intrs_zone_id);
+
         PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                                                                    .setTestMode(true)
+                                                                // enable during the development phase
+                                                                .setTestMode(true)
                                                         .getPwAdRequest();
 
         // get an ad instance using request
@@ -161,7 +118,8 @@ public class AdvertisingSample extends Activity {
         // generate a customized request
         String zoneId = getResources().getString(R.string.video_zone_id);
         PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                                                                    .setTestMode(true)
+                                                                // enable during the development phase
+                                                                .setTestMode(true)
                                                         .getPwAdRequest();
 
         // get an ad instance using request
@@ -208,17 +166,22 @@ public class AdvertisingSample extends Activity {
         // find the view in your layout
         PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
 
-        bannerAdView.setAdUpdateInterval(0); // no auto rotation
+        // Banner rotation interval; defaults to 60 seconds.
+//        bannerAdView.setAdUpdateInterval(0); // no auto rotation
+        bannerAdView.setAdUpdateInterval(30); // rotate every 30 seconds.
 
         // generate a customized request
         String zoneId = getResources().getString(R.string.banner_zone_id);
 
-        Map<String, String> params = new HashMap<String, String>(1);
-        params.put("cid", "238409");
-
         PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-//                                                                    .setTestMode(true)
-                                                                    .setCustomParameters(params)
+                                                                    // enable during the development phase
+                                                                    .setTestMode(true)
+
+//                                                                    // enable automatic gps based location tracking
+//                                                                    .setLocationTrackingEnabled(true)
+
+//                                                                    // optional keywords for custom targeting
+//                                                                    .setKeywords(Arrays.asList("keyword1", "keyword2"))
                                                             .getPwAdRequest();
 
         // register for ad lifecycle callbacks
@@ -249,24 +212,24 @@ public class AdvertisingSample extends Activity {
             }
         });
 
+//        // Optionally set location manually.
+//        double lat = 40.7787895;
+//        double lng = -73.9660945;
+//        bannerAdView.updateLocation(lat, lng);
+
         // start banner rotating
         bannerAdView.startRequestingAds(request);
     }
 
 
-    public void fireAdPrompt(View sender) {
-        simpleAdPromptExmple();
-//        advancedAdPromptExample();
-    }
-
     public void fireInterstitial(View sender) {
-        simpleInterstitialExample();
-//        advancedInterstitialExample();
+//        simpleInterstitialExample();
+        advancedInterstitialExample();
     }
 
     public void fireVideoInterstitial(View sender) {
-        simpleVideoExample();
-//        advancedVideoExample();
+//        simpleVideoExample();
+        advancedVideoExample();
     }
 
     public void fireBanner(View sender) {
