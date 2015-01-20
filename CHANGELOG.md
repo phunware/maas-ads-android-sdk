@@ -1,6 +1,13 @@
 MaaSAdvertising Change Log
 ==========================
 
+
+Version 2.1.0 *(2015-01-19)*
+----------------------------
+ * Added Native Ad support
+ * various bug fixes and performance improvements
+
+
 Version 1.1.1 *(2014-05-09)*
 ----------------------------
  * quieted logging by default

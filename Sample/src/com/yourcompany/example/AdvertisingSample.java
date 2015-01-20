@@ -19,6 +19,7 @@ public class AdvertisingSample extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // enable debug logs during development
         PwLog.setShowLog(true);
 
         Resources r = getResources();
