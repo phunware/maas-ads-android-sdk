@@ -1,6 +1,10 @@
 MaaSAdvertising Change Log
 ==========================
 
+Version 2.1.1 *(2015-02-05)*
+----------------------------
+* Various video bug fixes and performance improvements
+
 
 Version 2.1.0 *(2015-01-19)*
 ----------------------------
