@@ -11,7 +11,7 @@ Requirements
 ------------
 
 - MaaS Core v1.3.2 or greater
-- Google Play Services to enable Advertising Id support (Recommended) [Installation Instructions](https://developer.android.com/google/play-services/id.html)
+- Google Play Services to enable Advertising ID support (recommended); installation instructions [here](https://developer.android.com/google/play-services/id.html)
 
 
 Getting Started
@@ -31,10 +31,10 @@ The following libraries are required:
 MaaSCore.jar
 ````
 
-MaaS Advertising depends on MaaSCore.jar which is available here: https://github.com/phunware/maas-core-android-sdk
+MaaS Advertising depends on MaaSCore.jar, which is available here: https://github.com/phunware/maas-core-android-sdk
 
 It's recommended that you add the MaaS libraries to the 'libs' directory. This directory should contain MaaSCore.jar
-and MaaSMaaSAdvertising.jar  as well as any other MaaS libraries that you are using.
+and MaaSMaaSAdvertising.jar, as well as any other MaaS libraries that you are using.
 
 Update your `AndroidManifest.xml` to include the following permissions and activity:
 
@@ -61,7 +61,7 @@ See [AndroidManifest.xml](https://github.com/phunware/maas-ads-android-sdk/blob/
 Documentation
 ------------
 
-Documentation is included in HTML format in the `Docs` folder, as well as [zipped](https://github.com/phunware/maas-ads-android-sdk/blob/master/MaaSAdvertising-javadoc.zip?raw=true).
+Documentation is included in HTML format in the `Docs` folder and [zipped](https://github.com/phunware/maas-ads-android-sdk/blob/master/MaaSAdvertising-javadoc.zip?raw=true) as well.
 
 
 
@@ -73,7 +73,7 @@ The primary methods in MaaS Advertising involve displaying the various ad types:
 
 ### Native Ad Usage
 
-Native ads are advertisments designed to fit naturally into your app's look and feel.  Pre-defined ad features
+Native ads are advertisments designed to fit naturally into your app's look and feel. Predefined ad features
 are provided as a JSON payload which your app consumes in a template that follows your UI's theme.
 
 *Example Code Usage*
@@ -97,8 +97,8 @@ nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
 
     @Override
     public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
-        // The ad failed to load, errMsg describes why.
-        // Error messages are not intended to be displayed to the user
+        // The ad failed to load and errMsg describes why.
+        // Error messages are not intended for user display.
     }
 });
 
@@ -130,7 +130,7 @@ private void renderUiFromNativeAd(PwNativeAd nativeAd) throws JSONException {
     String adtext = json.optString("adtext");
     String cta = json.optString("cta");
 
-    // use the data to build a view item of your own design...
+    // Use the data to build a view item of your own design.
 }
 ````
 
@@ -148,26 +148,26 @@ adLoader.multiLoad(context, request, numberOfAdsToLoad,
             @Override
             public void onSuccess(PwAdLoader adLoader, List<PwNativeAd> nativeAdsList) {
                 for(PwNativeAd nativeAd : nativeAdsList) {
-                    // use the native ad to build a view item, ...
+                    // Use the native ad to build a view item.
                     try {
                         renderUiFromNativeAd(nativeAd);
                     } catch (JSONException e) {
-                        // log error and discard this native ad instance
+                        // Log the error and discard this native ad instance.
                     }
                 }
             }
 
             @Override
             public void onFail(PwAdLoader adLoader, String errMsg) {
-                // no ads returned, errMsg describes why.
-                // Error messages are not intended to be displayed to the user
+                // No ads are returned and the errMsg describes why.
+                // Error messages are not intended for user display.
             }
         }
 );
 ````
 
 Code samples and advanced implementation can be found in the 
-[Native Ad Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/NativeAd-Sample/app/src/main/java/com/yourcompany/nativeadsexample/MainActivity.java)
+[native ad example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/NativeAd-Sample/app/src/main/java/com/yourcompany/nativeadsexample/MainActivity.java)
 
 Gradle project:
 [Native Ad Example Project](https://github.com/phunware/maas-ads-android-sdk/blob/master/NativeAd-Sample/)
@@ -177,12 +177,12 @@ Gradle project:
 
 ### Banner Usage
 
-Banners are inline ads that are shown alongside your apps interface.
+Banners are inline ads that are shown alongside your app's interface.
 
-*Xml Only Usage*
+**NOTE**: For XML usage only.
 Add this to your layout xml:
 ````xml
-<!-- Add a banner to your layout xml: -->
+<!-- Add a banner to your layout xml. -->
 <!-- This will cause a 320x50 ad to be created, which will automatically kick off ad rotation. -->
 <com.phunware.advertising.PwBannerAdView
     android:id="@+id/bannerAd"
@@ -191,10 +191,9 @@ Add this to your layout xml:
     zone="YOUR_ZONE_ID" />
 ````
 
-*Example Code Usage*
 Add this to your layout xml: (note that "zone" is not specified)
 ````xml
-<!-- Add a banner to your layout xml -->
+<!-- Add a banner to your layout xml. -->
 <!-- This will cause a 320x50 ad to be created, which will automatically kick off ad rotation. -->
 <com.phunware.advertising.PwBannerAdView
     android:id="@+id/bannerAd"
@@ -212,13 +211,12 @@ PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAd);
 bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 ````
 
-Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/yourcompany/example/AdvertisingSample.java).
+Advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/yourcompany/example/AdvertisingSample.java).
 
 
 ### Interstitial Usage
 
-Interstitials are best used at discrete stopping points in your app's flow, such as at the end of a game level
-or when the player dies.
+Interstitials are best used at discrete stopping points in your app's flow, such as at the end of a game level or when the player dies.
 
 *Example Usage*
 ````java
@@ -230,12 +228,12 @@ PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdFor
 interstitialAd.show();
 ````
 
-Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/com/yourcompany/example/AdvertisingSample.java).
+Advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/com/yourcompany/example/AdvertisingSample.java).
 
 
 ### Video Ads Usage
 
-Video ads are interstitial ads that play a video.  They are best used at discrete
+Video ads are interstitial ads that play a video. They are best used at discrete
 stopping points in your app's flow, such as at the end of a game level or when the player dies.
 
 *Example Usage*
@@ -247,4 +245,4 @@ import com.phunware.advertising.*;
 PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-Advanced implementation can be found in the [Example Code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/yourcompany/example/AdvertisingSample.java).
+Advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/yourcompany/example/AdvertisingSample.java).
