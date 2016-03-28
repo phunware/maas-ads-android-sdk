@@ -2,7 +2,8 @@ package com.yourcompany.nativeadsexample;
 
 import android.content.Context;
 
-import com.tapit.advertising.TapItNativeAd;
+
+import com.phunware.advertising.PwNativeAd;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,11 +15,11 @@ public class Ad {
     private final String html;
     private final String adtext;
     private final String cta;
-    private final TapItNativeAd tapItNativeAd;
+    private final PwNativeAd pwNativeAd;
 
-    public Ad(TapItNativeAd tapItNativeAd) throws JSONException {
-        this.tapItNativeAd = tapItNativeAd;
-        JSONObject json = new JSONObject(tapItNativeAd.getAdData());
+    public Ad(PwNativeAd pwNativeAd) throws JSONException {
+        this.pwNativeAd = pwNativeAd;
+        JSONObject json = new JSONObject(pwNativeAd.getAdData());
         this.adtitle = json.optString("adtitle");
         this.imageurl = json.optString("iconurl");
         this.stars = json.optInt("rating");
@@ -52,15 +53,15 @@ public class Ad {
     }
 
     public void impression() {
-        tapItNativeAd.trackImpression();
+        pwNativeAd.trackImpression();
     }
 
     public void click(Context ctx) {
-        tapItNativeAd.click(ctx);
+        pwNativeAd.click(ctx);
     }
 
     @Override
     public String toString() {
-        return "Title: " + adtitle + " (" + tapItNativeAd.toString() + ")";
+        return "Title: " + adtitle + " (" + pwNativeAd.toString() + ")";
     }
 }

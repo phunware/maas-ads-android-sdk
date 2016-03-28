@@ -12,18 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.tapit.advertising.TapItAdLoader;
-import com.tapit.advertising.TapItAdRequest;
-import com.tapit.advertising.TapItAdvertising;
-import com.tapit.advertising.TapItNativeAd;
-import com.tapit.core.TapItLog;
+
+import com.phunware.advertising.*;
+import com.phunware.core.PwCoreSession;
+import com.phunware.core.PwLog;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MainActivity extends Activity {
 
@@ -36,7 +35,21 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        TapItLog.setShowLog(true);
+        PwLog.setShowLog(true);
+
+        // Initialize MaaS Core
+        PwCoreSession.getInstance().registerKeys(this,
+                getString(R.string.app_appid),
+                getString(R.string.app_accesskey),
+                getString(R.string.app_signaturekey),
+                getString(R.string.app_encryptionkey));
+
+        // Register MaaS Advertising module
+        PwCoreSession.getInstance().installModules(PwAdvertisingModule.getInstance());
+
+        // test that you've integrated properly
+        // NOTE: remove this before your app goes live!
+        PwAdvertisingModule.get().validateSetup(this);
     }
 
 
@@ -66,6 +79,7 @@ public class MainActivity extends Activity {
 
         private static final String TAG = "NA";
         private ListView mListView;
+        private TextView mEmptyView;
 
         public PlaceholderFragment() {
         }
@@ -76,20 +90,22 @@ public class MainActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             mListView = (ListView) rootView.findViewById(R.id.listViewMain);
+            mEmptyView = (TextView) rootView.findViewById(R.id.empty_view);
+            mListView.setEmptyView(mEmptyView);
             final Context finalContext = getActivity();
 
             String zoneId = finalContext.getString(R.string.zone_id);
-            TapItAdRequest request = TapItAdvertising.get().getAdRequestBuilder(zoneId)
+            PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
                     .setTestMode(true)
-                    .getTapItAdRequest();
+                    .getPwAdRequest();
 
-            TapItAdLoader<TapItNativeAd> adLoader = TapItAdvertising.get().getNativeAdLoader();
+            PwAdLoader<PwNativeAd> adLoader = PwAdvertisingModule.get().getNativeAdLoader();
             adLoader.multiLoad(finalContext, request, 10,
-                    new TapItAdLoader.TapItAdLoaderListener<TapItNativeAd>() {
+                    new PwAdLoader.PwAdLoaderListener<PwNativeAd>() {
                         @Override
-                        public void onSuccess(TapItAdLoader tapItAdLoader, List<TapItNativeAd> tapItNativeAds) {
-                            ArrayList<Ad> listOfAds = new ArrayList<Ad>(tapItNativeAds.size());
-                            for (TapItNativeAd tna : tapItNativeAds) {
+                        public void onSuccess(PwAdLoader pwAdLoader, List<PwNativeAd> pwNativeAds) {
+                            ArrayList<Ad> listOfAds = new ArrayList<Ad>(pwNativeAds.size());
+                            for (PwNativeAd tna : pwNativeAds) {
                                 try {
                                     Ad ad = new Ad(tna);
                                     Log.d("NAP", "THE AD:\n" + ad.toString());
@@ -118,8 +134,10 @@ public class MainActivity extends Activity {
                         }
 
                         @Override
-                        public void onFail(TapItAdLoader tapItAdLoader, String s) {
-                            Log.e("NAP", "Native ads failed to load: " + s);
+                        public void onFail(PwAdLoader pwAdLoader, String s) {
+                            String msg = "Native ads failed to load: " + s;
+                            mEmptyView.setText(msg);
+                            Log.e("NAP", msg);
                         }
                     });
             return rootView;

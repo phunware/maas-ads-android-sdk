@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.tapit.advertising.internal.TapItAdActivity"
+            android:name="com.phunware.advertising.internal.PwAdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
     </application>
 
