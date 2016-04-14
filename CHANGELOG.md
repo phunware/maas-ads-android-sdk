@@ -1,5 +1,12 @@
 MaaSAdvertising Change Log
 ==========================
+Version 2.1.7 *(2016-4-14)*
+----------------------------
+* Android Archive file (.aar) release
+* Improved support for banner ad XML layouts
+* Fixed bugs with video ads for test mode and key words
+* Fixed bugs with automatic start and stop of banner ads
+
 Version 2.1.6 *(2015-10-15)*
 ----------------------------
 * Fixed issue with zoom control on in app browser view.
