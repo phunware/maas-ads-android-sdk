@@ -54,7 +54,7 @@ Update your `AndroidManifest.xml` to include the following permissions and activ
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
 ````
-See [AndroidManifest.xml](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/AndroidManifest.xml) for an example manifest file.
+See [AndroidManifest.xml](Sample/sample/src/main/AndroidManifest.xml) for an example manifest file.
 
 
 
@@ -167,12 +167,7 @@ adLoader.multiLoad(context, request, numberOfAdsToLoad,
 ````
 
 Code samples and advanced implementation can be found in the 
-[native ad example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/NativeAd-Sample/app/src/main/java/com/yourcompany/nativeadsexample/MainActivity.java)
-
-Gradle project:
-[Native Ad Example Project](https://github.com/phunware/maas-ads-android-sdk/blob/master/NativeAd-Sample/)
-
-
+[native ad example code](Sample/sample/src/main/java/com/phunware/advertising/sample/NativeAdActivity.java)
 
 
 ### Banner Usage
@@ -211,7 +206,7 @@ PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAd);
 bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 ````
 
-Advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/yourcompany/example/AdvertisingSample.java).
+Advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Interstitial Usage
@@ -228,7 +223,7 @@ PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdFor
 interstitialAd.show();
 ````
 
-Advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/com/yourcompany/example/AdvertisingSample.java).
+Advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Video Ads Usage
@@ -245,4 +240,4 @@ import com.phunware.advertising.*;
 PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-Advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/src/com/yourcompany/example/AdvertisingSample.java).
+Advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
