@@ -1,5 +1,11 @@
 MaaSAdvertising Change Log
 ==========================
+Version 2.2.0 *(2016-4-26)*
+----------------------------
+* Revised API
+* Automatic location tracking no longer supported (see README)
+* **New** native ad example views
+
 Version 2.1.7 *(2016-4-14)*
 ----------------------------
 * Android Archive file (.aar) release

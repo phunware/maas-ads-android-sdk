@@ -32,7 +32,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // uncomment this if you put the MaaSAdvertising.aar in libs/
-    // compile(name:'MaaSAdvertising', ext:'aar')
+    //compile(name:'PWCore-1.3.13', ext:'jar')
+    //compile(name:'MaaSAdvertising', ext:'aar')
 
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.google.android.gms:play-services-ads:8.1.0'

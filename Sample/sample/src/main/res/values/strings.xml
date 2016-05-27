@@ -4,6 +4,9 @@
     <string name="video">Video</string>
     <string name="banner">Banner</string>
     <string name="nativeAd">Native</string>
+    <string name="native_ads">Native Ads</string>
+    <string name="ads">Ads</string>
+    <string name="nativeAdNewsFeed">Native Ad</string>
 
     <string name="app_appid">appid</string>
     <string name="app_accesskey">abcd12345</string>

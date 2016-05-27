@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.phunware.advertising.PwAdRequest;
 import com.phunware.advertising.PwAdvertisingModule;
 import com.phunware.advertising.PwBannerAdView;
 import com.phunware.advertising.PwInterstitialAd;
@@ -16,11 +15,11 @@ import com.phunware.core.PwCoreSession;
 import com.phunware.core.PwLog;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ExampleActivity extends AppCompatActivity {
+
     private final static String TAG = "AdvertisingSample";
+    private PwBannerAdView mBannerAdView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +44,8 @@ public class ExampleActivity extends AppCompatActivity {
         // test that you've integrated properly
         // NOTE: remove this before your app goes live!
         PwAdvertisingModule.get().validateSetup(this);
+
+        mBannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
     }
 
     @Override
@@ -68,23 +69,18 @@ public class ExampleActivity extends AppCompatActivity {
 
 
     public void simpleInterstitialExample() {
-        String zoneId = getResources().getString(R.string.intrs_zone_id);
-        PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdForZone(this, zoneId);
+        String zoneId = getString(R.string.intrs_zone_id);
+        PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, zoneId);
         interstitialAd.show();
     }
 
-
     public void advancedInterstitialExample() {
         // generate a customized request
-        String zoneId = getResources().getString(R.string.intrs_zone_id);
+        String zoneId = getString(R.string.intrs_zone_id);
 
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                // enable during the development phase
-//                .setTestMode(true)
-                .getPwAdRequest();
-
-        // get an ad instance using request
-        PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAd(this, request);
+        PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, zoneId);
+        interstitialAd.setTestMode(true);
+        interstitialAd.setKeywords(Arrays.asList("keyword1", "keyword2"));
 
         // register for ad lifecycle callbacks
         interstitialAd.setListener(new PwInterstitialAd.PwInterstitialAdListener() {
@@ -117,77 +113,62 @@ public class ExampleActivity extends AppCompatActivity {
 
 
     public void simpleVideoExample() {
-        String zoneId = getResources().getString(R.string.video_zone_id);
-        PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, zoneId);
+        String zoneId = getString(R.string.video_zone_id);
+        PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(getApplicationContext(), zoneId);
         videoAd.show();
     }
 
 
     public void advancedVideoExample() {
-        // generate a customized request
-        String zoneId = getResources().getString(R.string.video_zone_id);
-        Map<String, String> customParams = new HashMap<String, String>();
-        customParams.put("cid", "123456");
+        String zoneId = getString(R.string.video_zone_id);
 
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                // enable during the development phase
-                .setTestMode(true)
-                .setKeywords(Arrays.asList("keyword1", "keyword2"))
-                .setLocationTrackingEnabled(true)
-                .getPwAdRequest();
-
-
-        // get an ad instance using request
-        PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAd(this, request);
-
-        // register for ad lifecycle callbacks
+        PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(getApplicationContext(), zoneId);
+        videoAd.setTestMode(true);
+        videoAd.setPlacementType(PwVideoInterstitialAd.TYPE_ALL);
+        videoAd.updateLocation(42.621535114613685, -5.595249100000046);
+        videoAd.setKeywords(Arrays.asList("keyword1", "keyword2"));
         videoAd.setListener(new PwVideoInterstitialAd.PwVideoInterstitialAdListener() {
             @Override
-            public void videoInterstitialDidLoad(PwVideoInterstitialAd ad) {
-                // show ad as soon as it's loaded
-                Log.d(TAG, "VideoAd Did Load");
-                ad.show();
+            public void videoInterstitialDidLoad(PwVideoInterstitialAd videoInterstitialAd) {
+                videoInterstitialAd.show();
             }
 
             @Override
-            public void videoInterstitialDidClose(PwVideoInterstitialAd ad) {
-                Log.d(TAG, "videoInterstitialDidClose");
+            public void videoInterstitialDidClose(PwVideoInterstitialAd videoInterstitialAd) {
+
             }
 
             @Override
-            public void videoInterstitialDidFail(PwVideoInterstitialAd ad, String error) {
-                Log.d(TAG, "videoInterstitialDidFail: " + error);
+            public void videoInterstitialDidFail(PwVideoInterstitialAd videoInterstitialAd, String error) {
+
             }
 
             @Override
-            public void videoInterstitialActionWillLeaveApplication(PwVideoInterstitialAd ad) {
-                Log.d(TAG, "videoInterstitialActionWillLeaveApplication");
+            public void videoInterstitialActionWillLeaveApplication(PwVideoInterstitialAd videoInterstitialAd) {
+
             }
         });
 
-        // load ad... we'll be notified when it's ready
         videoAd.load();
     }
 
 
     public void simpleBannerExample() {
-        PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
-        String zoneId = getResources().getString(R.string.banner_zone_id);
-        bannerAdView.startRequestingAdsForZone(zoneId);
+        String zoneId = getString(R.string.banner_zone_id);
+        mBannerAdView.startRequestingAdsForZone(zoneId);
     }
 
     public void advancedBannerExample() {
         Log.d(TAG, "advancedBannerExample");
-        // find the view in your layout
-        PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
 
         // Banner rotation interval; defaults to 60 seconds.
-//        bannerAdView.setAdUpdateInterval(0); // no auto rotation
-        bannerAdView.setAdUpdateInterval(30); // rotate every 30 seconds.
+        // mBannerAdView.setAdUpdateInterval(0); // no auto rotation
+        mBannerAdView.setAdUpdateInterval(30); // rotate every 30 seconds.
+
+        String zoneId = getString(R.string.banner_zone_id);
 
         // generate a customized request
-        String zoneId = getResources().getString(R.string.banner_zone_id);
-
+        /* DEPRECATED custom parameters support only in the old API
         Map<String, String> customParams = new HashMap<String, String>();
         customParams.put("custom key", "custom value");
 
@@ -197,12 +178,17 @@ public class ExampleActivity extends AppCompatActivity {
                 // enable automatic gps based location tracking
                 .setLocationTrackingEnabled(true)
                 // optional keywords for custom targeting
-                // .setKeywords(Arrays.asList("keyword1", "keyword2"))
+                .setKeywords(Arrays.asList("keyword1", "keyword2"))
                 .setCustomParameters(customParams)
                 .getPwAdRequest();
+                */
+        mBannerAdView.setZone(zoneId)
+                .setTestMode(true)                                  // enable during the development phase
+                .setKeywords(Arrays.asList("keyword1", "keyword2")) // optional keywords for custom targeting
+        ;
 
         // register for ad lifecycle callbacks
-        bannerAdView.setListener(new PwBannerAdView.BannerAdListener() {
+        mBannerAdView.setListener(new PwBannerAdView.BannerAdListener() {
             @Override
             public void onReceiveBannerAd(PwBannerAdView ad) {
                 Log.d(TAG, "Banner onReceiveBannerAd");
@@ -229,13 +215,13 @@ public class ExampleActivity extends AppCompatActivity {
             }
         });
 
-//        // Optionally set location manually.
+        // Optionally set location manually.
 //        double lat = 40.7787895;
 //        double lng = -73.9660945;
-//        bannerAdView.updateLocation(lat, lng);
+//        mBannerAdView.updateLocation(lat, lng);
 
         // start banner rotating
-        bannerAdView.startRequestingAds(request);
+        mBannerAdView.startRequestingAds();
     }
 
 

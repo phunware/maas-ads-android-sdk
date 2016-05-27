@@ -10,9 +10,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.phunware.advertising.PwAdRequest;
-import com.phunware.advertising.PwAdvertisingModule;
 import com.phunware.advertising.PwNativeAd;
+import com.phunware.core.PwLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +20,8 @@ import org.json.JSONObject;
  * Created by NB-RogerAng on 2/11/16.
  */
 public class NativeAdActivity extends Activity {
+
+    private static final String TAG = NativeAdActivity.class.getSimpleName();
 
     private TextView mAdTitle;
     private ImageView mAdIcon;
@@ -46,25 +47,15 @@ public class NativeAdActivity extends Activity {
         // native ad zone id
         String zoneId = getResources().getString(R.string.native_zone_id);
 
-        // Simple request
-//        PwNativeAd nativeAd = PwAdvertisingModule.get().getNativeAdForZone(this, zoneId);
+        PwNativeAd nativeAd = PwNativeAd.getInstance(this, zoneId);
+        nativeAd.setTestMode(true);
 
-        // get an ad instance using request
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                // enable during the development phase
-                .setTestMode(true)
-                .getPwAdRequest();
-        PwNativeAd nativeAd = PwAdvertisingModule.get().getNativeAd(this, request);
         nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
             @Override
             public void nativeAdDidLoad(PwNativeAd nativeAd) {
                 try {
                     renderUiFromNativeAd(nativeAd);
-
-                    // ... when native ad data is displayed on screen:
-                    nativeAd.trackImpression();
                 } catch (JSONException e) {
-                    // Log the error and discard this native ad instance.
                     e.printStackTrace();
                 }
             }
@@ -73,8 +64,7 @@ public class NativeAdActivity extends Activity {
             public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
                 // The ad failed to load and the errMsg describes why.
                 // Error messages are not intended for user display.
-                mAdTitle.setText("Ad load failed");
-                mAdText.setText(errMsg);
+                PwLog.e(TAG, errMsg);
             }
         });
 

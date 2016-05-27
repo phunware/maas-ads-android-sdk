@@ -1,7 +1,9 @@
+<!--- make sure you update the package-info file as well! --->
+
 MaaS Advertising SDK for Android
 ================
 
-Version 2.1.7
+Version 2.2.0
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -9,15 +11,15 @@ This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maa
 
 Requirements
 ------------
-
-- MaaS Core v1.3.2 or greater
-- Google Play Services to enable Advertising ID support (recommended); installation instructions [here](https://developer.android.com/google/play-services/id.html)
+- Android SDK 4.0.3 (API level 15) or above
+- MaaS Core v1.3.13 or greater
+- Google Play Services to enable Advertising ID support (recommended); installation instructions [here](https://developer.android.com/google/play-services/id.html).
 
 
 Getting Started
 ---------------
 
-- [Download MaaS Advertising](https://github.com/phunware/maas-ads-android-sdk/archive/master.zip) and run the included sample app.
+- [Download the MaaS Advertising SDK](https://github.com/phunware/maas-ads-android-sdk/archive/master.zip) and run the included sample app.
 - Continue reading below for installation and integration instructions.
 - Be sure to read the [documentation](http://phunware.github.io/maas-ads-android-sdk/) for additional details.
 
@@ -31,22 +33,23 @@ The following libraries are required:
 PWCore-1.3.13.jar
 ````
 
-MaaS Advertising depends on MaaSCore.jar, which is available here: https://github.com/phunware/maas-core-android-sdk
+MaaS Advertising depends on the MaaS Core SDK, which is available here: https://github.com/phunware/maas-core-android-sdk
 
-It's recommended that you add the MaaS libraries to the 'libs' directory. This directory should contain MaaSCore.jar
-and MaaSMaaSAdvertising.jar, as well as any other MaaS libraries that you are using.
+With version 2.2.0 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
+This is the modern format for Android libraries and provides improved support.  JAR versions of the SDK are
+provided for legacy compatibility but may be phased out in the future.
+
+Consult the instructions of your development tools on how to add the libraries to your app project.
+
+In Android Studio, you can add the libraries as modules to your project using the menu option
+File->New->New Module and selecting "Import .JAR/.AAR Package".  Then add the library modules as
+dependencies of your app in the File->Project Structure window.
 
 Update your `AndroidManifest.xml` to include the following permissions and activity:
 
 ````xml
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
-<!-- Optional permissions to enable ad geotargeting:
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
--->
 
 <!-- Inside of the application tag: -->
 <activity
@@ -54,7 +57,7 @@ Update your `AndroidManifest.xml` to include the following permissions and activ
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
 ````
-See [AndroidManifest.xml](Sample/sample/src/main/AndroidManifest.xml) for an example manifest file.
+See [AndroidManifest.xml](sample/src/main/AndroidManifest.xml) for an example manifest file.
 
 
 
@@ -71,104 +74,6 @@ Integration
 The primary methods in MaaS Advertising involve displaying the various ad types:
 
 
-### Native Ad Usage
-
-Native ads are advertisments designed to fit naturally into your app's look and feel. Predefined ad features
-are provided as a JSON payload which your app consumes in a template that follows your UI's theme.
-
-*Example Code Usage*
-````java
-import com.phunware.advertising.*;
-
-// ...
-
-String zoneId = "YOUR_NATIVE_AD_ZONE_ID";
-PwNativeAd nativeAd = PwAdvertisingModule.get().getNativeAdForZone(context, zoneId);
-nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
-    @Override
-    public void nativeAdDidLoad(PwNativeAd nativeAd) {
-        try {
-            renderUiFromNativeAd(nativeAd);
-
-        } catch (JSONException e) {
-            // log error and discard this native ad instance
-        }
-    }
-
-    @Override
-    public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
-        // The ad failed to load and errMsg describes why.
-        // Error messages are not intended for user display.
-    }
-});
-
-nativeAd.load();
-
-
-// ...
-
-
-// ... when native ad data is displayed on screen:
-nativeAd.trackImpression();
-
-
-// ...
-
-
-// ... when native ad is clicked:
-nativeAd.click(context);
-````
-
-````java
-
-private void renderUiFromNativeAd(PwNativeAd nativeAd) throws JSONException {
-    JSONObject json = new JSONObject(nativeAd.getAdData());
-    String adtitle = json.optString("adtitle");
-    String imageurl = json.optString("iconurl");
-    double stars = json.optDouble("rating");
-    String html = json.optString("html");
-    String adtext = json.optString("adtext");
-    String cta = json.optString("cta");
-
-    // Use the data to build a view item of your own design.
-}
-````
-
-To request multiple ads at once:
-````java
-String zoneId = "YOUR_NATIVE_AD_ZONE_ID";
-PwAdRequest request = PwAdvertisingModule.get().getAdRequestForZone(zoneId);
-
-PwAdvertisingModule.get().getNativeAdLoader();
-int numberOfAdsToLoad = 10;
-PwAdLoader<PwNativeAd> adLoader = PwAdvertisingModule.get().getNativeAdLoader();
-
-adLoader.multiLoad(context, request, numberOfAdsToLoad,
-        new PwAdLoader.PwAdLoaderListener<PwNativeAd>() {
-            @Override
-            public void onSuccess(PwAdLoader adLoader, List<PwNativeAd> nativeAdsList) {
-                for(PwNativeAd nativeAd : nativeAdsList) {
-                    // Use the native ad to build a view item.
-                    try {
-                        renderUiFromNativeAd(nativeAd);
-                    } catch (JSONException e) {
-                        // Log the error and discard this native ad instance.
-                    }
-                }
-            }
-
-            @Override
-            public void onFail(PwAdLoader adLoader, String errMsg) {
-                // No ads are returned and the errMsg describes why.
-                // Error messages are not intended for user display.
-            }
-        }
-);
-````
-
-Code samples and advanced implementation can be found in the 
-[native ad example code](Sample/sample/src/main/java/com/phunware/advertising/sample/NativeAdActivity.java)
-
 
 ### Banner Usage
 
@@ -180,16 +85,15 @@ Add this to your layout xml:
 <!-- Add a banner to your layout xml. -->
 <!-- This will cause a 320x50 ad to be created, which will automatically kick off ad rotation. -->
 <com.phunware.advertising.PwBannerAdView
-    android:id="@+id/bannerAd"
-    android:layout_width="320dp"
-    android:layout_height="50dp"
-    zone="YOUR_ZONE_ID" />
+       android:id="@+id/bannerAd"
+       android:layout_width="320dp"
+       android:layout_height="50dp
+       app:zone="YOUR_ZONE_ID"
+       app:auto_load="true" />
 ````
-
-Add this to your layout xml: (note that "zone" is not specified)
+Or add this to your layout xml: (note that "zone" is not specified)
 ````xml
 <!-- Add a banner to your layout xml. -->
-<!-- This will cause a 320x50 ad to be created, which will automatically kick off ad rotation. -->
 <com.phunware.advertising.PwBannerAdView
     android:id="@+id/bannerAd"
     android:layout_width="320dp"
@@ -206,7 +110,7 @@ PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAd);
 bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 ````
 
-Advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Interstitial Usage
@@ -219,11 +123,11 @@ import com.phunware.advertising.*;
 
 // ...
 
-PwInterstitialAd interstitialAd = PwAdvertisingModule.get().getInterstitialAdForZone(this, "YOUR_INTERSTITIAL_ZONE_ID");
+PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, "YOUR_INTERSTITIAL_ZONE_ID");
 interstitialAd.show();
 ````
 
-Advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Video Ads Usage
@@ -237,7 +141,143 @@ import com.phunware.advertising.*;
 
 // ...
 
-PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAdForZone(this, "YOUR_VIDEO_ZONE_ID");
+PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-Advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+
+
+
+### Native Ad Usage
+
+Native ads are advertisements designed to fit naturally into your app's look and feel.
+Predefined ad features are provided which your app consumes in a template that follows your UI's theme.
+
+*Example Code Usage*
+````java
+import com.phunware.advertising.*;
+
+...
+
+String zoneId = "YOUR_NATIVE_AD_ZONE_ID";
+PwNativeAd nativeAd = PwNativeAd.getInstance(context, zoneId);
+nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
+    @Override
+    public void nativeAdDidLoad(PwNativeAd nativeAd) {
+        renderUiFromNativeAd(nativeAd);
+    }
+
+    @Override
+    public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
+        // The ad failed to load and errMsg describes why.
+        // Error messages are not intended for user display.
+    }
+});
+
+nativeAd.load();
+
+````
+
+````java
+
+private void renderUiFromNativeAd(PwNativeAd ad) {
+    String adtitle = ad.getAdTitle();
+    String iconurl = ad.getImageUrl();
+    double stars = ad.getRating();
+    String adtext = ad.getAdText();
+    String cta = ad.getCta();
+
+    // Use the data to build a view item of your own design.
+
+    // ... when native ad data is displayed on screen:
+    nativeAd.trackImpression();
+
+    ...
+
+    // ... when native ad is clicked:
+    nativeAd.click(context);
+}
+````
+
+To request multiple ads at once:
+````java
+String zoneId = "YOUR_NATIVE_AD_ZONE_ID";
+int numberOfAdsToLoad = 10;
+
+
+PwAdLoader<PwNativeAd> adLoader = PwAdLoader.getNativeAdLoader();
+adLoader.setZone(zoneId);
+adLoader.setTestMode(true);
+
+adLoader.loadAds(context, numberOfAdsToLoad,
+    new PwAdLoader.PwAdLoaderListener<PwNativeAd>() {
+        @Override
+        public void onSuccess(PwAdLoader adLoader, List<PwNativeAd> nativeAdsList) {
+            for (PwNativeAd nativeAd : nativeAdsList) {
+                // Use the native ad to build a view item.
+                renderUiFromNativeAd(nativeAd);
+            }
+        }
+
+        @Override
+        public void onFail(PwAdLoader adLoader, String errMsg) {
+            // No ads are returned and the errMsg describes why.
+            // Error messages are not intended for user display.
+        }
+    }
+);
+````
+
+The sample code provides example views for News Feed, App Wall, Content Stream, and Content Wall.
+Code samples and advanced implementation examples can be found in the
+[native ad examples library](nativeads) which is included with the SDK sample app.
+
+
+### Location Data
+
+To provide your app with greater control over performance and location data, the Ads SDK no longer
+supports automatic location tracking.  To enable geotargeting, you're app will need to provide location
+data to the ads.
+
+*Example Code*
+````java
+PwBannerAdView bannerAdView;
+LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+int canAccessLocation = context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+if (canAccessLocation == PackageManager.PERMISSION_GRANTED) {
+    boolean isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+    if (isEnabled) {
+        MyLocationListener listener = new MyLocationListener();
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 60, 0, listener);
+    }
+    else {
+        Log.d(TAG, "location not available");
+    }
+}
+else {
+    Log.d(TAG, "don't have permission for location");
+    // for Android 6.0, you can request your permissions
+}
+...
+private class MyLocationListener implements LocationListener {
+
+    @Override
+    public void onLocationChanged(Location location) {
+        ...
+        bannerAdView.updateLocation(location.getLatitude(), location.getLongitude());
+        ...
+    }
+...
+}
+
+````
+
+Also, your `AndroidManifest.xml` will need to include the one of the following permissions:
+
+````xml
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+````

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -8,53 +7,100 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
-        <Button
-            android:id="@+id/interstitialButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/interstitial"
-            android:onClick="fireInterstitial" />
-
-        <Button
-            android:id="@+id/videoInterstitialButton"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_labels"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ads"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/video"
-            android:onClick="fireVideoInterstitial" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/interstitialButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/interstitial"
+                android:onClick="fireInterstitial" />
 
-        <Button
-            android:id="@+id/bannerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/banner"
-            android:onClick="fireBanner" />
+            <Button
+                android:id="@+id/videoInterstitialButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/video"
+                android:onClick="fireVideoInterstitial" />
 
-        <Button
-            android:id="@+id/navtiveButton"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/bannerButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/banner"
+                android:onClick="fireBanner" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nativeAd"
-            android:onClick="fireNativeAd" />
+            android:layout_marginTop="@dimen/margin_top_labels"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/native_ads"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/nativeNewsFeed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/nativeAdNewsFeed"
+                android:onClick="fireNativeAd" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <com.phunware.advertising.PwBannerAdView
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/native_ad_view_placeholder"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/bannerAdView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <!-- Example with all PwBannerAdView attributes
-    <com.phunware.advertising.PwBannerAdView
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/bannerAdView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:zone="@string/banner_zone_id"
-        app:auto_load="true"
-        app:update_interval="30"
-        app:test_mode="true"/>
+        />
+
+    <!-- With fixed size view, if ad content does not match the view size, the content is centered in the view -->
+    <com.phunware.advertising.PwBannerAdView
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bannerAdView"
+        android:layout_width="320dp"
+        android:layout_height="50dp" />
+
+    <!-- Example with all PwBannerAdView attributes. With wrap_content, view will resize to ad content. -->
+    <!--
+        <com.phunware.advertising.PwBannerAdView
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/bannerAdView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:zone="@string/banner_zone_id"
+            app:auto_load="true"
+            app:update_interval="30"
+            app:test_mode="true"/>
     -->
+
 </RelativeLayout>
