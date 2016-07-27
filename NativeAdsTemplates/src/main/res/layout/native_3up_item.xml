@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_child_ad_container"
+    android:layout_width="110dp"
+    android:layout_height="210dp"
+    android:padding="5dp"
+    >
+    <ImageView
+        android:id="@+id/imageViewAdIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        tools:src="@drawable/icon"
+        android:layout_alignParentTop="true"/>
+    <TextView
+        android:id="@+id/title_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Phunware and the max character"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:layout_below="@+id/imageViewAdIcon"
+        android:maxLines="2"
+        android:layout_marginTop="3dp"
+        />
+    <TextView
+        android:id="@+id/text_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Ad description text goes here.  Up to one hundred characters can go in this space, so plan wisely."
+        android:textSize="10sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_below="@+id/title_ad"
+        android:layout_marginTop="3dp"
+        />
+    <Button
+        android:id="@+id/btn_action"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/button_3up"
+        android:text="C T A text"
+        android:textSize="14sp"
+        android:textColor="@color/blue"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

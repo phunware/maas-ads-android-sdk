@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Make the ad loading a little schmancy with an animation -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--fade and slide in from left-->
+    <translate android:fromXDelta="-50%p" android:toXDelta="0"
+        android:duration="200"/>
+    <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
+        android:duration="200" />
+
+    <!--shake-->
+   <rotate
+        android:startOffset="150"
+        android:duration="50"
+        android:fromDegrees="5"
+        android:toDegrees="-5"
+        android:pivotX="50%"
+        android:repeatCount="2"
+        android:repeatMode="reverse"
+       />
+</set>

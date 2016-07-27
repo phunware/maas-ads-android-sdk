@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.phunware.advertising.sample.nativeads.IconsView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!-- The recyclerview width needs to be fixed or wrap_content of the container won't work.
+         The height of the container view is handled in the custom view to fake the wrap_content effect. -->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/icons_view"
+        android:scrollbars="vertical"
+        android:layout_width="@dimen/iconview_width"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="@dimen/icon_margin"
+        android:paddingBottom="@dimen/icon_margin"
+        tools:listitem="@layout/native_icon_item"/>
+
+    <ImageView
+        android:id="@+id/close_button"
+        android:contentDescription="Close Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/btn_dialog"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/icons_view"
+        android:layout_marginTop="5dp"
+        />
+
+</com.phunware.advertising.sample.nativeads.IconsView>

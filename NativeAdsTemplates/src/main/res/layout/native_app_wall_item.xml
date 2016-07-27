@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
+
+    <ImageView
+        android:id="@+id/imageViewAdIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        tools:src="@drawable/icon"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/sponsored"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/textViewAdTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Ad Title"
+        android:layout_toRightOf="@+id/imageViewAdIcon"
+        android:layout_alignTop="@+id/imageViewAdIcon" />
+
+    <RatingBar
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:id="@+id/ratingBarStars"
+        android:layout_below="@+id/textViewAdTitle"
+        android:layout_toRightOf="@+id/imageViewAdIcon"
+        style="?android:attr/ratingBarStyleSmall"
+        android:numStars="5"
+        tools:rating="2.5"/>
+
+    <Button
+        android:id="@+id/buttonCta"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        tools:text="Call To Action"
+        android:textSize="14sp"
+        android:layout_below="@+id/ratingBarStars"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

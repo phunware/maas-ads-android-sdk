@@ -59,8 +59,6 @@ Update your `AndroidManifest.xml` to include the following permissions and activ
 ````
 See [AndroidManifest.xml](sample/src/main/AndroidManifest.xml) for an example manifest file.
 
-
-
 Documentation
 ------------
 
@@ -83,17 +81,18 @@ Banners are inline ads that are shown alongside your app's interface.
 Add this to your layout xml:
 ````xml
 <!-- Add a banner to your layout xml. -->
-<!-- This will cause a 320x50 ad to be created, which will automatically kick off ad rotation. -->
+<!-- This will cause an ad to be created, which will automatically kick off ad rotation. -->
 <com.phunware.advertising.PwBannerAdView
        android:id="@+id/bannerAd"
-       android:layout_width="320dp"
-       android:layout_height="50dp
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
        app:zone="YOUR_ZONE_ID"
        app:auto_load="true" />
 ````
 Or add this to your layout xml: (note that "zone" is not specified)
 ````xml
 <!-- Add a banner to your layout xml. -->
+<!-- This will cause a 320x50 ad to be created. -->
 <com.phunware.advertising.PwBannerAdView
     android:id="@+id/bannerAd"
     android:layout_width="320dp"
@@ -108,6 +107,8 @@ import com.phunware.advertising.*;
 
 PwBannerAdView bannerAdView = (PwBannerAdView)findViewById(R.id.bannerAd);
 bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
+
+bannerAdView.set3dAnimation(true); // set true if you want the rotation with a 3D animation. False by default.
 ````
 
 An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
@@ -125,6 +126,23 @@ import com.phunware.advertising.*;
 
 PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, "YOUR_INTERSTITIAL_ZONE_ID");
 interstitialAd.show();
+````
+
+An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+
+
+### Landing Page Usage
+
+Landing pages are used to display a fullscreen URL in your app.
+
+*Example Usage*
+````java
+import com.phunware.advertising.*;
+
+// ...
+
+PwLandingPageAd landingPage = PwLandingPageAd.getInstance(this, "YOUR_ZONE_ID");
+landingPage.show();
 ````
 
 An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
@@ -181,13 +199,20 @@ nativeAd.load();
 ````java
 
 private void renderUiFromNativeAd(PwNativeAd ad) {
-    String adtitle = ad.getAdTitle();
+    //Get a NativeAd News Feed type view from the example template.
+    //NativeAds.getNewsFeedView() extract all elements from PwNativeAd and set on the returned view.
+    //See the class NativeAds on the Example code to see more templates like News Feed, App Wall, Content Stream, and Content Wall.
+    View nativeAdView = NativeAds.getNewsFeedView(ExampleActivity.this, ad);
+
+    //Then you need to add the view to another in your layout.
+    mViewWhereYourAdShouldBe.addView(nativeAdView);
+
+    //This way you can extract the information of the native ad and build your own template.
+    /*String adtitle = ad.getAdTitle();
     String iconurl = ad.getImageUrl();
     double stars = ad.getRating();
     String adtext = ad.getAdText();
     String cta = ad.getCta();
-
-    // Use the data to build a view item of your own design.
 
     // ... when native ad data is displayed on screen:
     nativeAd.trackImpression();
@@ -195,7 +220,7 @@ private void renderUiFromNativeAd(PwNativeAd ad) {
     ...
 
     // ... when native ad is clicked:
-    nativeAd.click(context);
+    nativeAd.click(context);*/
 }
 ````
 
@@ -217,6 +242,11 @@ adLoader.loadAds(context, numberOfAdsToLoad,
                 // Use the native ad to build a view item.
                 renderUiFromNativeAd(nativeAd);
             }
+            
+            /* Or you can call one of multiple ads template example.
+            *View multipleAdsView = NativeAds.get3UpView(ExampleActivity.this, nativeAdsList, Gravity.CENTER_HORIZONTAL);
+            *mViewWhereYourAdShouldBe.addView(multipleAdsView);
+            */
         }
 
         @Override

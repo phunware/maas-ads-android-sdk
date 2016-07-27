@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_size">64dp</dimen>
+    <dimen name="icon_margin">10dp</dimen>
+    <dimen name="iconview_width">84dp</dimen> <!-- factor in margin for items -->
+    <dimen name="native_clean_width">320dp</dimen>
+    <dimen name="native_3_up_width">110dp</dimen>
+    <dimen name="native_3_up_height">210dp</dimen>
+    <dimen name="native_margin_3_up">7dp</dimen>
+</resources>

@@ -1,5 +1,9 @@
 MaaSAdvertising Change Log
 ==========================
+Version 2.2.1 *(2016-7-27)*
+----------------------------
+* **New** Landing Page ad unit (see README)
+
 Version 2.2.0 *(2016-4-26)*
 ----------------------------
 * Revised API
