@@ -3,7 +3,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.2.0
+Version 2.2.1
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
