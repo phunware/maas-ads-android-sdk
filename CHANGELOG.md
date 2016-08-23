@@ -1,5 +1,10 @@
 MaaSAdvertising Change Log
 ==========================
+Version 2.2.2 *(2016-08-22)*
+----------------------------
+* Fixed bugs with Landing Page ads
+* Fixed bugs with Video ads
+
 Version 2.2.1 *(2016-7-27)*
 ----------------------------
 * **New** Landing Page ad unit (see README)
