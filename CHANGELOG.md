@@ -1,5 +1,10 @@
 MaaSAdvertising Change Log
 ==========================
+Version 2.2.3 *(2016-10-07)*
+----------------------------
+* Update to Core 3.0.2
+* Updated Google Play Services to 9.6.1
+
 Version 2.2.2 *(2016-08-22)*
 ----------------------------
 * Fixed bugs with Landing Page ads
