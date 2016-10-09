@@ -3,7 +3,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.2.2
+Version 2.2.3
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -35,7 +35,7 @@ PWCore-1.3.13.jar
 
 MaaS Advertising depends on the MaaS Core SDK, which is available here: https://github.com/phunware/maas-core-android-sdk
 
-With version 2.2.2 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
+With version 2.2.3 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
 This is the modern format for Android libraries and provides improved support.  JAR versions of the SDK are
 provided for legacy compatibility but may be phased out in the future.
 
