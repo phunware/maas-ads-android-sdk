@@ -1,7 +1,9 @@
 package com.phunware.advertising.sample;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,10 +18,14 @@ import com.phunware.advertising.PwBannerAdView;
 import com.phunware.advertising.PwInterstitialAd;
 import com.phunware.advertising.PwLandingPageAd;
 import com.phunware.advertising.PwNativeAd;
+import com.phunware.advertising.PwRewardedVideoAd;
 import com.phunware.advertising.PwVideoInterstitialAd;
-import com.phunware.advertising.sample.nativeads.NativeAds;
+import com.phunware.advertising.internal.vast.RVSuccessInfo;
+import com.phunware.advertising.internal.vast.TVASTRewardedVideoInfo;
+import com.phunware.core.PwLog;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExampleActivity extends AppCompatActivity {
@@ -67,9 +73,12 @@ public class ExampleActivity extends AppCompatActivity {
         });
 
 
+        // enable debug logs during development
+        PwLog.setShowLog(true);
+
         // test that you've integrated properly
         // NOTE: remove this before your app goes live!
-        //PwAdvertisingModule.getInstance().validateSetup(this);
+        PwAdvertisingModule.getInstance().validateSetup(this);
     }
 
     public void simpleInterstitialExample() {
@@ -145,7 +154,7 @@ public class ExampleActivity extends AppCompatActivity {
         */
 
         // register for ad lifecycle callbacks
-        PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(getApplicationContext(), zoneId);
+        PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(this, zoneId);
         videoAd.setTestMode(true);
         videoAd.setPlacementType(PwVideoInterstitialAd.TYPE_ALL);
         videoAd.updateLocation(42.621535114613685, -5.595249100000046);
@@ -371,7 +380,7 @@ public class ExampleActivity extends AppCompatActivity {
         nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
             @Override
             public void nativeAdDidLoad(PwNativeAd nativeAd) {
-                View view = NativeAds.getNewsFeedView(ExampleActivity.this, nativeAd);
+                View view = PwNativeAd.GenericViews.getNewsFeedView(ExampleActivity.this, nativeAd);
                 mNativeAdHolder.addView(view);
                 mNativeAdHolder.setVisibility(View.VISIBLE);
             }
@@ -380,7 +389,7 @@ public class ExampleActivity extends AppCompatActivity {
             public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
                 // The ad failed to load and the errMsg describes why.
                 // Error messages are not intended for user display.
-                Log.e(TAG, errMsg);
+                PwLog.e(TAG, errMsg);
             }
         });
 
@@ -397,7 +406,7 @@ public class ExampleActivity extends AppCompatActivity {
         nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
             @Override
             public void nativeAdDidLoad(PwNativeAd nativeAd) {
-                View view = NativeAds.getContentWallView(ExampleActivity.this, nativeAd);
+                View view = PwNativeAd.GenericViews.getContentWallView(ExampleActivity.this, nativeAd);
                 mNativeAdHolder.addView(view);
                 mNativeAdHolder.setVisibility(View.VISIBLE);
             }
@@ -406,7 +415,7 @@ public class ExampleActivity extends AppCompatActivity {
             public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
                 // The ad failed to load and the errMsg describes why.
                 // Error messages are not intended for user display.
-                Log.e(TAG, errMsg);
+                PwLog.e(TAG, errMsg);
             }
         });
 
@@ -437,7 +446,7 @@ public class ExampleActivity extends AppCompatActivity {
         adLoader.loadAds(this, 3, new PwAdLoader.PwAdLoaderListener<PwNativeAd>() {
             @Override
             public void onSuccess(PwAdLoader loader, List<PwNativeAd> ads) {
-                View innerView = NativeAds.getIconsView(ExampleActivity.this, ads, new View.OnClickListener() {
+                View innerView = PwNativeAd.GenericViews.getIconsView(ExampleActivity.this, ads, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mNativeAdHolder.setVisibility(View.GONE);
@@ -450,7 +459,7 @@ public class ExampleActivity extends AppCompatActivity {
 
             @Override
             public void onFail(PwAdLoader loader, String error) {
-                Log.e(TAG, error);
+                PwLog.e(TAG, error);
             }
         });
     }
@@ -465,7 +474,7 @@ public class ExampleActivity extends AppCompatActivity {
         nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
             @Override
             public void nativeAdDidLoad(PwNativeAd nativeAd) {
-                View view = NativeAds.getCleanView(ExampleActivity.this, nativeAd);
+                View view = PwNativeAd.GenericViews.getCleanView(ExampleActivity.this, nativeAd);
                 mNativeAdHolder.addView(view);
                 mNativeAdHolder.setVisibility(View.VISIBLE);
             }
@@ -474,7 +483,7 @@ public class ExampleActivity extends AppCompatActivity {
             public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
                 // The ad failed to load and the errMsg describes why.
                 // Error messages are not intended for user display.
-                Log.e(TAG, errMsg);
+                PwLog.e(TAG, errMsg);
             }
         });
 
@@ -500,16 +509,89 @@ public class ExampleActivity extends AppCompatActivity {
         adLoader.loadAds(this, countAds, new PwAdLoader.PwAdLoaderListener<PwNativeAd>() {
             @Override
             public void onSuccess(PwAdLoader loader, List<PwNativeAd> ads) {
-                View innerView = NativeAds.get3UpView(ExampleActivity.this, ads, gravity);
+                View innerView = PwNativeAd.GenericViews.get3UpView(ExampleActivity.this, ads, gravity);
                 mNativeAdHolder.addView(innerView);
                 mNativeAdHolder.setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onFail(PwAdLoader loader, String error) {
-                Log.e(TAG, error);
+                PwLog.e(TAG, error);
             }
         });
+    }
+
+    public void fireRewardedVideo(View sender){
+        String zoneId = getString(R.string.rewarded_video_zone_id);
+        double lat = 40.7787895;
+        double lng = -73.9660945;
+        HashMap<String, String> customData = new HashMap<>();
+        for (int i = 0; i < 8; i++){
+            customData.put("reward" + String.valueOf(i), "gold");
+            customData.put("key" + String.valueOf(i), "someValue");
+        }
+
+        PwRewardedVideoAd rewardedVideoAd = PwRewardedVideoAd.getInstance(this, zoneId);
+        //rewardedVideoAd.setTestMode(true);
+        rewardedVideoAd.setKeywords(Arrays.asList("keyword1", "keyword2"));
+        rewardedVideoAd.updateLocation(lat, lng);
+        rewardedVideoAd.setUserId("5487G54d30OsdZt79");
+        rewardedVideoAd.setCustomData(customData);
+        rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
+            @Override
+            public void rewardedVideoDidLoad(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                if(rewardedVideoAd != null){
+                    rewardedVideoAd.show();
+                }
+            }
+
+            @Override
+            public void rewardedVideoDidClose(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                Log.d(TAG, "Rewarded Video onCloseRewardedVideo");
+            }
+
+            @Override
+            public void rewardedVideoDidFail(PwRewardedVideoAd rewardedVideoAd, String error, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                Log.d(TAG, "Rewarded Video onRewardedVideoFail"
+                        + error
+                        + ". Code: "
+                        + String.valueOf(rewardedVideoInfo.getError()));
+                showDialog(error);
+            }
+
+            @Override
+            public void rewardedVideoActionWillLeaveApplication(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                Log.d(TAG, "Rewarded Video onLeaveApplication");
+            }
+
+            @Override
+            public void rewardedVideoDidEndPlaybackSuccessfully(PwRewardedVideoAd rewardedVideoAd, RVSuccessInfo rewardedVideoSuccessInfo, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                String message = String.format(getString(R.string.rewarded),
+                        rewardedVideoSuccessInfo.getCurrencyId(),
+                        rewardedVideoSuccessInfo.getAmount(),
+                        rewardedVideoSuccessInfo.getRemainingViews());
+
+                showDialog(message);
+            }
+        });
+
+        rewardedVideoAd.load();
+    }
+
+    private void showDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setTitle(getString(R.string.app_name));
+
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void clearViews(){

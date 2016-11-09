@@ -3,6 +3,7 @@
     <string name="interstitial">Interstitial</string>
     <string name="video">Video</string>
     <string name="banner">Banner</string>
+    <string name="rewardedVideo">Rewarded Video</string>
     <string name="landing_page">Landing Page</string>
     <string name="native_ads">Native Ads</string>
     <string name="ads">Ads</string>
@@ -27,6 +28,7 @@
     <string name="intrs_zone_id">7271</string>
     <string name="landing_page_zone_id">76663</string>
     <string name="native_zone_id">64477</string>
+    <string name="rewarded_video_zone_id">78393</string>
 
     <string-array name="native_ad_types">
         <item>Select format</item>
@@ -40,4 +42,5 @@
         <item>3 Up Center</item>
         <item>3 Up Right</item>
     </string-array>
+    <string name="rewarded">Congratulations, you have earned %1$s.\nAmount: %2$o.\nRemaining Views: %3$o</string>
 </resources>

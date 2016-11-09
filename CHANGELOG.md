@@ -1,5 +1,10 @@
 MaaSAdvertising Change Log
 ==========================
+
+Version 2.3.0 *(2016-11-08)*
+----------------------------
+* New Ad Unit. Rewarded Video Ad
+
 Version 2.2.3 *(2016-10-07)*
 ----------------------------
 * Update to Core 3.0.2

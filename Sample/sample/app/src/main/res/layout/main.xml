@@ -35,12 +35,12 @@
                 android:onClick="fireVideoInterstitial" />
 
             <Button
-                android:id="@+id/bannerButton"
+                android:id="@+id/rewardedVideoButton"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/banner"
-                android:onClick="fireBanner" />
+                android:text="@string/rewardedVideo"
+                android:onClick="fireRewardedVideo" />
         </LinearLayout>
 
         <LinearLayout
@@ -55,6 +55,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/landing_page"
                 android:onClick="fireLandingPage" />
+
+            <Button
+                android:id="@+id/bannerButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/banner"
+                android:onClick="fireBanner" />
 
             <Button
                 android:id="@+id/banner3dButton"

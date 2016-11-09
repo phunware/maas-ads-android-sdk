@@ -2,13 +2,12 @@ package com.phunware.advertising.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.phunware.advertising.PwAdLoader;
 import com.phunware.advertising.PwNativeAd;
-import com.phunware.advertising.sample.nativeads.NativeAds;
+import com.phunware.core.PwLog;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class NativeAdActivity extends Activity {
             nativeAd.setListener(new PwNativeAd.PwNativeAdListener() {
                 @Override
                 public void nativeAdDidLoad(PwNativeAd nativeAd) {
-                    View view = NativeAds.getContentStreamView(NativeAdActivity.this, nativeAd);
+                    View view = PwNativeAd.GenericViews.getContentStreamView(NativeAdActivity.this, nativeAd);
                     container.addView(view);
                 }
 
@@ -47,7 +46,7 @@ public class NativeAdActivity extends Activity {
                 public void nativeAdDidFail(PwNativeAd nativeAd, String errMsg) {
                     // The ad failed to load and the errMsg describes why.
                     // Error messages are not intended for user display.
-                    Log.e(TAG, errMsg);
+                    PwLog.e(TAG, errMsg);
                 }
             });
 
@@ -61,13 +60,13 @@ public class NativeAdActivity extends Activity {
             adLoader.loadAds(this, 8, new PwAdLoader.PwAdLoaderListener<PwNativeAd>() {
                 @Override
                 public void onSuccess(PwAdLoader loader, List<PwNativeAd> ads) {
-                    View innerView = NativeAds.getAppWallView(NativeAdActivity.this, ads);
+                    View innerView = PwNativeAd.GenericViews.getAppWallView(NativeAdActivity.this, ads);
                     container.addView(innerView);
                 }
 
                 @Override
                 public void onFail(PwAdLoader loader, String error) {
-                    Log.e(TAG, error);
+                    PwLog.e(TAG, error);
                 }
             });
         }

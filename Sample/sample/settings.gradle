@@ -1,1 +1,1 @@
-include ':app', ':NativeAdsTemplates'
+include ':app'

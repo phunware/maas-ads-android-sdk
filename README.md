@@ -1,9 +1,10 @@
+
 <!--- make sure you update the package-info file as well! --->
 
 MaaS Advertising SDK for Android
 ================
 
-Version 2.2.3
+Version 2.3.0
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -35,7 +36,7 @@ PWCore-1.3.13.jar
 
 MaaS Advertising depends on the MaaS Core SDK, which is available here: https://github.com/phunware/maas-core-android-sdk
 
-With version 2.2.3 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
+With version 2.3.0 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
 This is the modern format for Android libraries and provides improved support.  JAR versions of the SDK are
 provided for legacy compatibility but may be phased out in the future.
 
@@ -164,6 +165,64 @@ videoAd.show();
 ````
 An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
+
+### Rewarded Video Ad
+Rewarded Video ads are interstitial ads that play a video and reward the user after see the video. They are best used on games making the user wants to see an Ad to be rewarded.
+
+*Example Usage*
+````java
+import com.phunware.advertising.*;
+
+//...
+
+PwRewardedVideoAd rewardedVideoAd = PwRewardedVideoAd.getInstance(this, "YOUR_REWARDED_VIDEO_ZONE_ID");
+rewardedVideoAd.setUserId("YOUR_LOCAL_PLAYER_ID"); //This is required.
+
+//You can send custom data on a HashMap
+HashMap<String, String> customData = new HashMap<>();
+        customData.put("Data 1", "value 1");
+        customData.put("Data 2", "value 2");
+        //Note: this custom data is converted to JSON, and had a limit of 255 characters, if this exceed the 255 limit the SDK will delete the necessary keys of data to reach the limit.
+        mRewardedVideoAd.setCustomData(customData);
+
+//Setting listeners.
+rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
+            @Override
+            public void rewardedVideoDidLoad(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                rewardedVideoAd.show();
+            }
+
+            @Override
+            public void rewardedVideoDidClose(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                Log.d("TAG", "rewardedVideoDidClose");
+            }
+
+            @Override
+            public void rewardedVideoDidFail(PwRewardedVideoAd rewardedVideoAd, String error, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                //If rewarded video doesn't have remaining views, you can check the error code if this exist.
+                if(rewardedVideoInfo.getError() == 557){
+                    Toast.makeText("getContext()", "You don't have remaining views", Toast.SHORT).show();
+                }
+            }
+
+            @Override
+            public void rewardedVideoActionWillLeaveApplication(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+
+            }
+
+            @Override
+            public void rewardedVideoDidEndPlaybackSuccessfully(PwRewardedVideoAd rewardedVideoAd, RVSuccessInfo rewardedVideoSuccessInfo, TVASTRewardedVideoInfo rewardedVideoInfo) {
+            
+            Log.d("REWARD:", rewardedVideoSuccessInfo.getCurrencyId());
+            Log.d("AMOUNT:", String.valueOf(rewardedVideoSuccessInfo.getAmount()));
+            
+            //Remaining views after video completes.
+            Log.d("REMAINING VIEWS:", String.valueOf(rewardedVideoSuccessInfo.getRemainingViews()));
+            }
+        });
+
+rewardedVideoAd.load();
+````
 
 
 ### Native Ad Usage
