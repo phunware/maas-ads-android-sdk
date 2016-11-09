@@ -258,10 +258,10 @@ nativeAd.load();
 ````java
 
 private void renderUiFromNativeAd(PwNativeAd ad) {
-    //Get a NativeAd News Feed type view from the example template.
-    //NativeAds.getNewsFeedView() extract all elements from PwNativeAd and set on the returned view.
-    //See the class NativeAds on the Example code to see more templates like News Feed, App Wall, Content Stream, and Content Wall.
-    View nativeAdView = NativeAds.getNewsFeedView(ExampleActivity.this, ad);
+    //Get a NativeAd Content Wall type view from the example template.
+    //PwNativeAd.GenericViews.getContentWallView() extract all elements from PwNativeAd and set on the returned view.
+    //See the class PwNativeAd.GenericViews on the Example code to see more templates like News Feed, App Wall, Content Stream, and Content Wall.
+    View nativeAdView = PwNativeAd.GenericViews.getContentWallView(ExampleActivity.this, nativeAd);
 
     //Then you need to add the view to another in your layout.
     mViewWhereYourAdShouldBe.addView(nativeAdView);
