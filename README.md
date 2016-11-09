@@ -46,6 +46,9 @@ In Android Studio, you can add the libraries as modules to your project using th
 File->New->New Module and selecting "Import .JAR/.AAR Package".  Then add the library modules as
 dependencies of your app in the File->Project Structure window.
 
+Also you can use Nexus Phunware Server to get the SDK across gradle:
+compile 'com.phunware.advertising:ads:2.3.0:release@aar'
+
 Update your `AndroidManifest.xml` to include the following permissions and activity:
 
 ````xml
