@@ -1,6 +1,11 @@
 MaaSAdvertising Change Log
 ==========================
 
+Version 2.3.1 *(2016-12-12)*
+----------------------------
+* Fixed bugs with rewarded videos
+* Fixed bugs with end cards on video ads and rewarded video on landscape orientation
+
 Version 2.3.0 *(2016-11-08)*
 ----------------------------
 * New Ad Unit. Rewarded Video Ad

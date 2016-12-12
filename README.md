@@ -4,7 +4,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.3.0
+Version 2.3.1
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -36,7 +36,7 @@ PWCore-1.3.13.jar
 
 MaaS Advertising depends on the MaaS Core SDK, which is available here: https://github.com/phunware/maas-core-android-sdk
 
-With version 2.3.0 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
+With version 2.3.1 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
 This is the modern format for Android libraries and provides improved support.  JAR versions of the SDK are
 provided for legacy compatibility but may be phased out in the future.
 
@@ -45,9 +45,6 @@ Consult the instructions of your development tools on how to add the libraries t
 In Android Studio, you can add the libraries as modules to your project using the menu option
 File->New->New Module and selecting "Import .JAR/.AAR Package".  Then add the library modules as
 dependencies of your app in the File->Project Structure window.
-
-Also you can use Nexus Phunware Server to get the SDK across gradle:
-compile 'com.phunware.advertising:ads:2.3.0:release@aar'
 
 Update your `AndroidManifest.xml` to include the following permissions and activity:
 
@@ -261,10 +258,10 @@ nativeAd.load();
 ````java
 
 private void renderUiFromNativeAd(PwNativeAd ad) {
-    //Get a NativeAd Content Wall type view from the example template.
-    //PwNativeAd.GenericViews.getContentWallView() extract all elements from PwNativeAd and set on the returned view.
-    //See the class PwNativeAd.GenericViews on the Example code to see more templates like News Feed, App Wall, Content Stream, and Content Wall.
-    View nativeAdView = PwNativeAd.GenericViews.getContentWallView(ExampleActivity.this, nativeAd);
+    //Get a NativeAd News Feed type view from the example template.
+    //NativeAds.getNewsFeedView() extract all elements from PwNativeAd and set on the returned view.
+    //See the class NativeAds on the Example code to see more templates like News Feed, App Wall, Content Stream, and Content Wall.
+    View nativeAdView = NativeAds.getNewsFeedView(ExampleActivity.this, ad);
 
     //Then you need to add the view to another in your layout.
     mViewWhereYourAdShouldBe.addView(nativeAdView);
