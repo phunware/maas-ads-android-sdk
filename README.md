@@ -370,3 +370,6 @@ Also, your `AndroidManifest.xml` will need to include the one of the following p
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 ````
+-----------
+
+You understand and consent to Phunware’s Privacy Policy located at www.phunware.com/privacy. If your use of Phunware’s software requires a Privacy Policy of your own, you also agree to include the terms of Phunware’s Privacy Policy in your Privacy Policy to your end users.
