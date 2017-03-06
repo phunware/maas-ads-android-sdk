@@ -38,6 +38,7 @@ public class ExampleActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
         mBannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
         mNativeAdHolder = (ViewGroup) findViewById(R.id.native_ad_view_placeholder);
@@ -72,6 +73,12 @@ public class ExampleActivity extends AppCompatActivity {
             }
         });
 
+
+        //This is how the app can disable media caching. By default, caching is enabled by the SDK and
+        //set to a maximum capacity of 256 MB. To enable caching within this sample app, additional provisions
+        //will need to be implemented to request permissions to write to persistent storage.
+        PwAdvertisingModule pwAdModule=PwAdvertisingModule.getInstance();
+        pwAdModule.setAdsCacheSize(this, 0);
 
         // enable debug logs during development
         PwLog.setShowLog(true);

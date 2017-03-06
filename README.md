@@ -4,7 +4,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.3.1
+Version 2.4.0
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -36,7 +36,7 @@ PWCore-1.3.13.jar
 
 MaaS Advertising depends on the MaaS Core SDK, which is available here: https://github.com/phunware/maas-core-android-sdk
 
-With version 2.3.1 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
+With version 2.4.0 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
 This is the modern format for Android libraries and provides improved support.  JAR versions of the SDK are
 provided for legacy compatibility but may be phased out in the future.
 
@@ -224,6 +224,36 @@ rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
 rewardedVideoAd.load();
 ````
 
+### Pre-caching for Video Ads
+
+Video Interstitial Ads and Rewarded Video Ads support pre-caching. Once the ad is loaded it will be cached on to the device for a better playback experience. This feature is enabled by default and set to a maximum capacity of 256 MB but can be turned off by setting the cache size to 0.
+
+````java
+PwAdvertisingModule pwAdModule=PwAdvertisingModule.getInstance();
+pwAdModule.setAdsCacheSize(this, 0);
+````
+
+Progress of caching the media can be tracked by using cache listener. 
+Usage is as follows.
+
+````java
+PwRewardedVideoAd rewardedVideoAd = PwRewardedVideoAd.getInstance(this, "YOUR_REWARDED_VIDEO_ZONE_ID");
+rewardedVideoAd.setUserId("YOUR_LOCAL_PLAYER_ID"); //This is required.
+
+//Add cache listener
+rewardedVideoAd.setCacheListener(new PwAdCacheListener() {
+            @Override
+            public void onCacheCompleted() {
+		//App specific action
+            }
+
+            @Override
+            public void onCacheProgress(int percentageCompleted) {
+                //App specific action like Update a progress bar 
+            }
+        });
+````
+
 
 ### Native Ad Usage
 
@@ -370,6 +400,3 @@ Also, your `AndroidManifest.xml` will need to include the one of the following p
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 ````
------------
-
-You understand and consent to Phunware’s Privacy Policy located at www.phunware.com/privacy. If your use of Phunware’s software requires a Privacy Policy of your own, you also agree to include the terms of Phunware’s Privacy Policy in your Privacy Policy to your end users.

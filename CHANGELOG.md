@@ -1,6 +1,10 @@
 MaaSAdvertising Change Log
 ==========================
 
+Version 2.4.0 *(2017-03-06)*
+----------------------------
+* Added pre-caching for Video Interstitial and Rewarded Video Ads
+
 Version 2.3.1 *(2016-12-12)*
 ----------------------------
 * Fixed bugs with rewarded videos
