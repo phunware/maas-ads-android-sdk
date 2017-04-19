@@ -4,16 +4,15 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.4.0
+Version 2.4.1
 
-This is Phunware's Android SDK for the MaaS Advertising module.Visit https://ads.tapit.com/ and https://maas.phunware.com/ for more details and to sign up.
+This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
 
 
 Requirements
 ------------
 - Android SDK 4.0.3 (API level 15) or above
-- MaaS Core v1.3.13 or greater
 - Google Play Services to enable Advertising ID support (recommended); installation instructions [here](https://developer.android.com/google/play-services/id.html).
 
 
@@ -29,22 +28,12 @@ Getting Started
 Installation
 ------------
 
-The following libraries are required:
+To use Advertising SDK include the following dependency:
 ````
-PWCore-1.3.13.jar
+compile ('com.phunware.advertising:ads:2.4.1:release@aar'){
+        transitive = true;
+}
 ````
-
-MaaS Advertising depends on the MaaS Core SDK, which is available here: https://github.com/phunware/maas-core-android-sdk
-
-With version 2.4.0 of the Advertising SDK, it is recommended that you use the Android Archive file (.aar).
-This is the modern format for Android libraries and provides improved support.  JAR versions of the SDK are
-provided for legacy compatibility but may be phased out in the future.
-
-Consult the instructions of your development tools on how to add the libraries to your app project.
-
-In Android Studio, you can add the libraries as modules to your project using the menu option
-File->New->New Module and selecting "Import .JAR/.AAR Package".  Then add the library modules as
-dependencies of your app in the File->Project Structure window.
 
 Update your `AndroidManifest.xml` to include the following permissions and activity:
 
@@ -70,8 +59,13 @@ Documentation is included in HTML format in the `Docs` folder and [zipped](https
 Integration
 -----------
 
-The primary methods in MaaS Advertising involve displaying the various ad types:
+Version 2.4.1 added support for Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.
+Please see https://developer.phunware.com/pages/viewpage.action?pageId=3411004 for more details on integrating this feature.
 
+For using all other Ad types see https://developer.phunware.com/pages/viewpage.action?pageId=3408830
+
+
+The primary methods in MaaS Advertising involve displaying the various ad types:
 
 
 ### Banner Usage

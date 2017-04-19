@@ -1,6 +1,10 @@
 MaaSAdvertising Change Log
 ==========================
 
+Version 2.4.1 *(2017-04-19)*
+----------------------------
+* Added support for Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.
+
 Version 2.4.0 *(2017-03-06)*
 ----------------------------
 * Added pre-caching for Video Interstitial and Rewarded Video Ads
