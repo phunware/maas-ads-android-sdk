@@ -12,11 +12,11 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.phunware.core.PwLog;
-import com.phunware.locationmessaging.Callback;
-import com.phunware.locationmessaging.LocationMessaging;
-import com.phunware.locationmessaging.entities.Message;
-import com.phunware.locationmessaging.entities.MessageMetadata;
-import com.phunware.locationmessaging.messages.MessageManager;
+import com.phunware.engagement.Callback;
+import com.phunware.engagement.Engagement;
+import com.phunware.engagement.entities.Message;
+import com.phunware.engagement.entities.MessageMetadata;
+import com.phunware.engagement.messages.MessageManager;
 
 import java.io.InputStream;
 import java.util.List;
@@ -61,13 +61,16 @@ public class RewardActivity extends AppCompatActivity {
 
         Message intentMessage = getIntent().getParcelableExtra(MessageManager.EXTRA_MESSAGE);
 
-        LocationMessaging.analytics().trackCampaignAppLaunched(intentMessage.campaignId(),
+        Engagement.analytics().trackCampaignAppLaunched(intentMessage.campaignId(),
                 intentMessage.campaignType());
 
         boolean hasPromo = intent.getBooleanExtra(MessageManager.EXTRA_HAS_EXTRAS, false);
         if (hasPromo) {
             long messageId = intentMessage.campaignId();
-            LocationMessaging.messageManager().getMessage(messageId, new Callback<Message>() {
+
+            PwLog.d(TAG,"Campaign ID="+messageId);
+
+            Engagement.messageManager().getMessage(messageId, new Callback<Message>() {
                 @Override
                 public void onSuccess(Message data) {
 

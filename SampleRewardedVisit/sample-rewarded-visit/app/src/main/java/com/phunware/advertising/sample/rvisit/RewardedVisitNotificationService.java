@@ -2,7 +2,7 @@ package com.phunware.advertising.sample.rvisit;
 
 import android.support.v4.app.NotificationCompat;
 
-import com.phunware.locationmessaging.messages.services.NotificationCustomizationService;
+import com.phunware.engagement.messages.services.NotificationCustomizationService;
 
 /**
  * Customizes the notification displayed

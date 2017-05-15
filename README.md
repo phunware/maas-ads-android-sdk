@@ -4,7 +4,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.4.1
+Version 2.4.2
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -30,7 +30,7 @@ Installation
 
 To use Advertising SDK include the following dependency:
 ````
-compile ('com.phunware.advertising:ads:2.4.1:release@aar'){
+compile ('com.phunware.advertising:ads:2.4.2:release@aar'){
         transitive = true;
 }
 ````
@@ -59,7 +59,10 @@ Documentation is included in HTML format in the `Docs` folder and [zipped](https
 Integration
 -----------
 
-Version 2.4.1 added support for Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.
+Version 2.4.2 added support for caching to internal storage which does not require any permissions. 
+
+This SDK supports Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.
+
 Please see https://developer.phunware.com/pages/viewpage.action?pageId=3411004 for more details on integrating this feature.
 
 For using all other Ad types see https://developer.phunware.com/pages/viewpage.action?pageId=3408830
@@ -220,7 +223,7 @@ rewardedVideoAd.load();
 
 ### Pre-caching for Video Ads
 
-Video Interstitial Ads and Rewarded Video Ads support pre-caching. Once the ad is loaded it will be cached on to the device for a better playback experience. This feature is enabled by default and set to a maximum capacity of 256 MB but can be turned off by setting the cache size to 0.
+Video Interstitial Ads and Rewarded Video Ads support pre-caching. Once the ad is loaded it will be cached on to the device for a better playback experience. This feature is enabled by default and set to a maximum capacity of 256 MB but can be turned off by setting the cache size to 0. Caching is supported on both external and internal storage. However the former will take precedence if the required permissions are present.
 
 ````java
 PwAdvertisingModule pwAdModule=PwAdvertisingModule.getInstance();
@@ -401,4 +404,5 @@ You understand and consent to Phunware’s Privacy Policy located at www.phunwar
 
 Terms
 -----------
-Use of this software requires review and acceptance of our terms and conditions for developer use located at http://www.phunware.com/terms/
+Use of this software requires review and acceptance of our terms and conditions for developer use located at 
+http://www.phunware.com/terms/

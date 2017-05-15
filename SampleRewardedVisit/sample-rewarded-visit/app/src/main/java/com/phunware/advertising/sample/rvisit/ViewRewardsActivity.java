@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phunware.core.PwLog;
-import com.phunware.locationmessaging.Callback;
-import com.phunware.locationmessaging.LocationMessaging;
-import com.phunware.locationmessaging.entities.Message;
-import com.phunware.locationmessaging.entities.MessageMetadata;
+import com.phunware.engagement.Callback;
+import com.phunware.engagement.Engagement;
+import com.phunware.engagement.entities.Message;
+import com.phunware.engagement.entities.MessageMetadata;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class ViewRewardsActivity extends AppCompatActivity {
     }
 
     private void getAllMessages() {
-        LocationMessaging.messageManager().getMessages(new Callback<List<Message>>() {
+        Engagement.messageManager().getMessages(new Callback<List<Message>>() {
             @Override
             public void onSuccess(List<Message> data) {
                 messages.addAll(data);
