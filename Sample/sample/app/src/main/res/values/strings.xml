@@ -28,7 +28,7 @@
     <string name="intrs_zone_id">7271</string>
     <string name="landing_page_zone_id">76663</string>
     <string name="native_zone_id">64477</string>
-    <string name="rewarded_video_zone_id">78393</string>
+    <string name="rewarded_video_zone_id">82643</string>
 
     <string-array name="native_ad_types">
         <item>Select format</item>

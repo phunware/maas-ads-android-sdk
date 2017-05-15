@@ -16,7 +16,7 @@
         >
 
         <TextView
-            android:id="@+id/cache_status"
+            android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"

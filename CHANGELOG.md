@@ -1,6 +1,11 @@
 MaaSAdvertising Change Log
 ==========================
 
+Version 2.4.2 *(2017-05-15)*
+----------------------------
+* Added support for caching to internal storage which does not require any permissions.
+* Upgrade to Engagement SDK 3.1.0 for Rewarded Visit.
+
 Version 2.4.1 *(2017-04-19)*
 ----------------------------
 * Added support for Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.

@@ -4,11 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -16,8 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-
-import com.crashlytics.android.Crashlytics;
 import com.phunware.advertising.PwAdvertisingModule;
 import com.phunware.advertising.PwRewardedVideoAd;
 import com.phunware.advertising.internal.vast.RVSuccessInfo;
@@ -28,23 +23,16 @@ import com.phunware.core.PwLog;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import io.fabric.sdk.android.Fabric;
-
 public class ExampleActivity extends AppCompatActivity {
     private final static String TAG = "RewardedVisitSample";
-    private static final String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private static final int PERMISSION_WRITE_EXTERNAL_REQUEST = 101;
-
     private PwAdvertisingModule pwAdModule=null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
 
-        //initialize PwCoreSession
-        PwCoreSession.getInstance()
-                .registerKeys(this, getString(R.string.app_id),
+        PwCoreSession pwCoreSession=PwCoreSession.getInstance();
+        pwCoreSession.registerKeys(this, getString(R.string.app_id),
                         getString(R.string.access_key),
                         getString(R.string.sig_key),
                         "");
@@ -59,8 +47,6 @@ public class ExampleActivity extends AppCompatActivity {
         // test that you've integrated properly
         // NOTE: remove this before your app goes live!
         //pwAdModule.validateSetup(this);
-
-        requestPermission();
 
     }
 
@@ -84,36 +70,10 @@ public class ExampleActivity extends AppCompatActivity {
         }
     }
 
-    private void requestPermission(){
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            //Request the permission
-            ActivityCompat.requestPermissions(this,
-                    PERMISSIONS, PERMISSION_WRITE_EXTERNAL_REQUEST);
-
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         PwAdvertisingModule.getInstance().cleanUp(this);
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_WRITE_EXTERNAL_REQUEST: {
-                // If permission was denied then we disable caching
-                if(grantResults[0] == PackageManager.PERMISSION_DENIED){
-                    //This is how the app can disable media caching.
-                    pwAdModule.setAdsCacheSize(this, 0);
-                }
-            }
-        }
     }
 
 
@@ -127,7 +87,6 @@ public class ExampleActivity extends AppCompatActivity {
 
 
         PwRewardedVideoAd rewardedVideoAd = PwRewardedVideoAd.getInstance(this, zoneId);
-        //rewardedVideoAd.setTestMode(true);
         rewardedVideoAd.setKeywords(Arrays.asList("keyword1", "keyword2"));
         rewardedVideoAd.setUserId("5487G54d30OsdZt79");
         rewardedVideoAd.setCustomData(customData);
