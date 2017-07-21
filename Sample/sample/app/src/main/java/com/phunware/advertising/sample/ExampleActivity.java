@@ -1,8 +1,13 @@
 package com.phunware.advertising.sample;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +25,7 @@ import com.phunware.advertising.PwLandingPageAd;
 import com.phunware.advertising.PwNativeAd;
 import com.phunware.advertising.PwRewardedVideoAd;
 import com.phunware.advertising.PwVideoInterstitialAd;
+import com.phunware.advertising.internal.cache.PhunwareAdsCache;
 import com.phunware.advertising.internal.vast.RVSuccessInfo;
 import com.phunware.advertising.internal.vast.TVASTRewardedVideoInfo;
 import com.phunware.core.PwLog;
@@ -30,39 +36,43 @@ import java.util.List;
 
 public class ExampleActivity extends AppCompatActivity {
     private final static String TAG = "AdvertisingSample";
+    private static final String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final int PERMISSION_WRITE_EXTERNAL_REQUEST = 101;
 
     private PwBannerAdView mBannerAdView;
     private ViewGroup mNativeAdHolder;
     private Spinner mSpNativeAds;
+
+    private PwAdvertisingModule pwAdModule = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
-        mBannerAdView = (PwBannerAdView)findViewById(R.id.bannerAdView);
+        mBannerAdView = (PwBannerAdView) findViewById(R.id.bannerAdView);
         mNativeAdHolder = (ViewGroup) findViewById(R.id.native_ad_view_placeholder);
-        mSpNativeAds = (Spinner)findViewById(R.id.native_ad_type_spinner);
+        mSpNativeAds = (Spinner) findViewById(R.id.native_ad_type_spinner);
         mSpNativeAds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 1){
+                if (position == 1) {
                     fireNativeNewsFeed();
-                }else if(position == 2){
+                } else if (position == 2) {
                     fireNativeContentWall();
-                }else if(position == 3){
+                } else if (position == 3) {
                     fireNativeContentStream();
-                }else if(position == 4){
+                } else if (position == 4) {
                     fireNativeAppWall();
-                }else if(position == 5){
+                } else if (position == 5) {
                     fireNativeIcons();
-                }else if(position == 6){
+                } else if (position == 6) {
                     fireNativeAdClean();
-                }else if(position == 7){
+                } else if (position == 7) {
                     fireNativeAd3Up(Gravity.START);
-                }else if(position == 8){
+                } else if (position == 8) {
                     fireNativeAd3Up(Gravity.CENTER_HORIZONTAL);
-                }else if(position == 9){
+                } else if (position == 9) {
                     fireNativeAd3Up(Gravity.END);
                 }
             }
@@ -74,11 +84,7 @@ public class ExampleActivity extends AppCompatActivity {
         });
 
 
-        //This is how the app can disable media caching. By default, caching is enabled by the SDK and
-        //set to a maximum capacity of 256 MB. To enable caching within this sample app, additional provisions
-        //will need to be implemented to request permissions to write to persistent storage.
-        PwAdvertisingModule pwAdModule=PwAdvertisingModule.getInstance();
-        pwAdModule.setAdsCacheSize(this, 0);
+        pwAdModule = PwAdvertisingModule.getInstance();
 
         // enable debug logs during development
         PwLog.setShowLog(true);
@@ -86,6 +92,40 @@ public class ExampleActivity extends AppCompatActivity {
         // test that you've integrated properly
         // NOTE: remove this before your app goes live!
         PwAdvertisingModule.getInstance().validateSetup(this);
+
+        requestPermission();
+    }
+
+    private void requestPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            //Request the permission
+            ActivityCompat.requestPermissions(this,
+                    PERMISSIONS, PERMISSION_WRITE_EXTERNAL_REQUEST);
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PwAdvertisingModule.getInstance().cleanUp(this);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_WRITE_EXTERNAL_REQUEST: {
+                // If permission was denied then we disable caching
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    //This is how the app can disable media caching.
+                    pwAdModule.setAdsCacheSize(this, 0);
+                }
+            }
+        }
     }
 
     public void simpleInterstitialExample() {
@@ -107,23 +147,23 @@ public class ExampleActivity extends AppCompatActivity {
             @Override
             public void interstitialDidLoad(PwInterstitialAd ad) {
                 // show ad as soon as it's loaded
-                Log.d(TAG, "Interstitial Did Load");
+                PwLog.d(TAG, "Interstitial Did Load");
                 ad.show();
             }
 
             @Override
             public void interstitialDidClose(PwInterstitialAd ad) {
-                Log.d(TAG, "Interstitial Did Close");
+                PwLog.d(TAG, "Interstitial Did Close");
             }
 
             @Override
             public void interstitialDidFail(PwInterstitialAd ad, String error) {
-                Log.d(TAG, "Interstitial Did Fail: " + error);
+                PwLog.d(TAG, "Interstitial Did Fail: " + error);
             }
 
             @Override
             public void interstitialActionWillLeaveApplication(PwInterstitialAd ad) {
-                Log.d(TAG, "Interstitial Will Leave App");
+                PwLog.d(TAG, "Interstitial Will Leave App");
             }
         });
 
@@ -142,24 +182,6 @@ public class ExampleActivity extends AppCompatActivity {
         // generate a customized request
         String zoneId = getString(R.string.video_zone_id);
 
-        /* custom parameters only supported in legacy API
-        Map<String, String> customParams = new HashMap<String, String>();
-        customParams.put("cid", "123456");
-
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                // enable during the development phase
-                .setTestMode(true)
-                // enable automatic gps based location tracking
-                .setLocationTrackingEnabled(true)
-                // optional keywords for custom targeting
-                .setKeywords(Arrays.asList("keyword1", "keyword2"))
-                .setCustomParameters(customParams)
-                .getPwAdRequest();
-
-        // get an ad instance using request
-        PwVideoInterstitialAd videoAd = PwAdvertisingModule.get().getVideoInterstitialAd(this, request);
-        */
-
         // register for ad lifecycle callbacks
         PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(this, zoneId);
         videoAd.setTestMode(true);
@@ -169,7 +191,6 @@ public class ExampleActivity extends AppCompatActivity {
         videoAd.setListener(new PwVideoInterstitialAd.PwVideoInterstitialAdListener() {
             @Override
             public void videoInterstitialDidLoad(PwVideoInterstitialAd videoInterstitialAd) {
-                videoInterstitialAd.show();
             }
 
             @Override
@@ -186,6 +207,16 @@ public class ExampleActivity extends AppCompatActivity {
             public void videoInterstitialActionWillLeaveApplication(PwVideoInterstitialAd videoInterstitialAd) {
 
             }
+
+            @Override
+            public void onCacheCompleted(PwVideoInterstitialAd videoInterstitialAd) {
+                videoInterstitialAd.show();
+            }
+
+            @Override
+            public void onCacheProgress(PwVideoInterstitialAd videoInterstitialAd, int percentageCompleted) {
+
+            }
         });
 
         videoAd.load();
@@ -197,7 +228,7 @@ public class ExampleActivity extends AppCompatActivity {
     }
 
     public void advancedBannerExample() {
-        Log.d(TAG, "advancedBannerExample");
+        PwLog.d(TAG, "advancedBannerExample");
 
         // Banner rotation interval; defaults to 60 seconds.
         // mBannerAdView.setAdUpdateInterval(0); // no auto rotation
@@ -205,21 +236,6 @@ public class ExampleActivity extends AppCompatActivity {
 
         String zoneId = getString(R.string.banner_zone_id);
 
-        // generate a customized request
-        /* DEPRECATED custom parameters support only in the old API
-        Map<String, String> customParams = new HashMap<String, String>();
-        customParams.put("custom key", "custom value");
-
-        PwAdRequest request = PwAdvertisingModule.get().getAdRequestBuilder(zoneId)
-                // enable during the development phase
-                .setTestMode(true)
-                // enable automatic gps based location tracking
-                .setLocationTrackingEnabled(true)
-                // optional keywords for custom targeting
-                .setKeywords(Arrays.asList("keyword1", "keyword2"))
-                .setCustomParameters(customParams)
-                .getPwAdRequest();
-                */
         mBannerAdView.setZone(zoneId)
                 .setTestMode(true)                                  // enable during the development phase
                 .setKeywords(Arrays.asList("keyword1", "keyword2")); // optional keywords for custom targeting
@@ -228,27 +244,27 @@ public class ExampleActivity extends AppCompatActivity {
         mBannerAdView.setListener(new PwBannerAdView.BannerAdListener() {
             @Override
             public void onReceiveBannerAd(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onReceiveBannerAd");
+                PwLog.d(TAG, "Banner onReceiveBannerAd");
             }
 
             @Override
             public void onBannerAdError(PwBannerAdView ad, String errorMsg) {
-                Log.d(TAG, "Banner onBannerAdError: " + errorMsg);
+                PwLog.d(TAG, "Banner onBannerAdError: " + errorMsg);
             }
 
             @Override
             public void onBannerAdFullscreen(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onBannerAdFullscreen");
+                PwLog.d(TAG, "Banner onBannerAdFullscreen");
             }
 
             @Override
             public void onBannerAdDismissFullscreen(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onBannerAdDismissFullscreen");
+                PwLog.d(TAG, "Banner onBannerAdDismissFullscreen");
             }
 
             @Override
             public void onBannerAdLeaveApplication(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onBannerAdLeaveApplication");
+                PwLog.d(TAG, "Banner onBannerAdLeaveApplication");
             }
         });
 
@@ -299,23 +315,23 @@ public class ExampleActivity extends AppCompatActivity {
             @Override
             public void pageDidLoad(PwLandingPageAd ad) {
                 // show ad as soon as it's loaded
-                Log.d(TAG, "Page Did Load");
+                PwLog.d(TAG, "Page Did Load");
                 ad.show();
             }
 
             @Override
             public void pageDidClose(PwLandingPageAd ad) {
-                Log.d(TAG, "Page Did Close");
+                PwLog.d(TAG, "Page Did Close");
             }
 
             @Override
             public void pageDidFail(PwLandingPageAd ad, String error) {
-                Log.d(TAG, "Page Did Fail: " + error);
+                PwLog.d(TAG, "Page Did Fail: " + error);
             }
 
             @Override
             public void pageActionWillLeaveApplication(PwLandingPageAd ad) {
-                Log.d(TAG, "Page Will Leave App");
+                PwLog.d(TAG, "Page Will Leave App");
             }
         });
 
@@ -323,8 +339,8 @@ public class ExampleActivity extends AppCompatActivity {
         pageAd.load();
     }
 
-    public void fire3dBanner(View sender){
-        Log.d(TAG, "3dBannerExample");
+    public void fire3dBanner(View sender) {
+        PwLog.d(TAG, "3dBannerExample");
 
         mBannerAdView.setAdUpdateInterval(30); // rotate every 30 seconds.
         mBannerAdView.set3dAnimation(true); //This is importat to see the 3d animation. False is by default.
@@ -339,27 +355,27 @@ public class ExampleActivity extends AppCompatActivity {
         mBannerAdView.setListener(new PwBannerAdView.BannerAdListener() {
             @Override
             public void onReceiveBannerAd(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onReceiveBannerAd");
+                PwLog.d(TAG, "Banner onReceiveBannerAd");
             }
 
             @Override
             public void onBannerAdError(PwBannerAdView ad, String errorMsg) {
-                Log.d(TAG, "Banner onBannerAdError: " + errorMsg);
+                PwLog.d(TAG, "Banner onBannerAdError: " + errorMsg);
             }
 
             @Override
             public void onBannerAdFullscreen(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onBannerAdFullscreen");
+                PwLog.d(TAG, "Banner onBannerAdFullscreen");
             }
 
             @Override
             public void onBannerAdDismissFullscreen(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onBannerAdDismissFullscreen");
+                PwLog.d(TAG, "Banner onBannerAdDismissFullscreen");
             }
 
             @Override
             public void onBannerAdLeaveApplication(PwBannerAdView ad) {
-                Log.d(TAG, "Banner onBannerAdLeaveApplication");
+                PwLog.d(TAG, "Banner onBannerAdLeaveApplication");
             }
         });
 
@@ -471,7 +487,7 @@ public class ExampleActivity extends AppCompatActivity {
         });
     }
 
-    public void fireNativeAdClean(){
+    public void fireNativeAdClean() {
         clearViews();
 
         String zoneId = getString(R.string.native_zone_id);
@@ -497,7 +513,7 @@ public class ExampleActivity extends AppCompatActivity {
         nativeAd.load();
     }
 
-    public void fireNativeAd3Up(final int gravity){
+    public void fireNativeAd3Up(final int gravity) {
         clearViews();
         String zoneId = getString(R.string.native_zone_id);
 
@@ -507,9 +523,9 @@ public class ExampleActivity extends AppCompatActivity {
 
         int countAds;
 
-        if(gravity == Gravity.CENTER_HORIZONTAL){
+        if (gravity == Gravity.CENTER_HORIZONTAL) {
             countAds = 3;
-        }else{
+        } else {
             countAds = 2;
         }
 
@@ -529,12 +545,12 @@ public class ExampleActivity extends AppCompatActivity {
         });
     }
 
-    public void fireRewardedVideo(View sender){
+    public void fireRewardedVideo(View sender) {
         String zoneId = getString(R.string.rewarded_video_zone_id);
         double lat = 40.7787895;
         double lng = -73.9660945;
         HashMap<String, String> customData = new HashMap<>();
-        for (int i = 0; i < 8; i++){
+        for (int i = 0; i < 8; i++) {
             customData.put("reward" + String.valueOf(i), "gold");
             customData.put("key" + String.valueOf(i), "someValue");
         }
@@ -548,19 +564,16 @@ public class ExampleActivity extends AppCompatActivity {
         rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
             @Override
             public void rewardedVideoDidLoad(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
-                if(rewardedVideoAd != null){
-                    rewardedVideoAd.show();
-                }
             }
 
             @Override
             public void rewardedVideoDidClose(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
-                Log.d(TAG, "Rewarded Video onCloseRewardedVideo");
+                PwLog.d(TAG, "Rewarded Video onCloseRewardedVideo");
             }
 
             @Override
             public void rewardedVideoDidFail(PwRewardedVideoAd rewardedVideoAd, String error, TVASTRewardedVideoInfo rewardedVideoInfo) {
-                Log.d(TAG, "Rewarded Video onRewardedVideoFail"
+                PwLog.d(TAG, "Rewarded Video onRewardedVideoFail"
                         + error
                         + ". Code: "
                         + String.valueOf(rewardedVideoInfo.getError()));
@@ -569,7 +582,7 @@ public class ExampleActivity extends AppCompatActivity {
 
             @Override
             public void rewardedVideoActionWillLeaveApplication(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
-                Log.d(TAG, "Rewarded Video onLeaveApplication");
+                PwLog.d(TAG, "Rewarded Video onLeaveApplication");
             }
 
             @Override
@@ -581,13 +594,25 @@ public class ExampleActivity extends AppCompatActivity {
 
                 showDialog(message);
             }
+
+            @Override
+            public void onCacheCompleted(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                if (rewardedVideoAd != null) {
+                    rewardedVideoAd.show();
+                }
+            }
+
+            @Override
+            public void onCacheProgress(PwRewardedVideoAd rewardedVideoAd, int percentageCompleted) {
+
+            }
         });
 
         rewardedVideoAd.load();
     }
 
-    private void showDialog(String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private void showDialog(String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
@@ -597,16 +622,23 @@ public class ExampleActivity extends AppCompatActivity {
         builder.setTitle(getString(R.string.app_name));
 
         builder.setMessage(message);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
     }
 
-    private void clearViews(){
-        if(mBannerAdView != null){
+    private void clearViews() {
+        if (mBannerAdView != null) {
             mBannerAdView.stopRequestingAds();
             mBannerAdView.setVisibility(View.GONE);
         }
-        if(mNativeAdHolder != null){
+        if (mNativeAdHolder != null) {
             mNativeAdHolder.removeAllViewsInLayout();
         }
     }

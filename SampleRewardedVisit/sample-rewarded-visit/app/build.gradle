@@ -39,7 +39,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
 
-    compile ('com.phunware.advertising:ads:2.4.2:release@aar'){
+    compile ('com.phunware.advertising:ads:2.4.3:release@aar'){
         transitive = true;
     }
 }

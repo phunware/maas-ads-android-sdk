@@ -4,14 +4,18 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 
 import com.phunware.advertising.PwAdvertisingModule;
 import com.phunware.advertising.PwRewardedVideoAd;
@@ -23,15 +27,19 @@ import com.phunware.core.PwLog;
 import java.util.Arrays;
 import java.util.HashMap;
 
+
 public class ExampleActivity extends AppCompatActivity {
     private final static String TAG = "RewardedVisitSample";
-    private PwAdvertisingModule pwAdModule=null;
+    private static final String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final int PERMISSION_WRITE_EXTERNAL_REQUEST = 101;
+
+    private PwAdvertisingModule pwAdModule = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PwCoreSession pwCoreSession=PwCoreSession.getInstance();
+        PwCoreSession pwCoreSession = PwCoreSession.getInstance();
         pwCoreSession.registerKeys(this, getString(R.string.app_id),
                 getString(R.string.access_key),
                 getString(R.string.sig_key),
@@ -39,7 +47,7 @@ public class ExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.main);
 
-        pwAdModule=PwAdvertisingModule.getInstance();
+        pwAdModule = PwAdvertisingModule.getInstance();
 
         // enable debug logs during development
         PwLog.setShowLog(true);
@@ -62,7 +70,7 @@ public class ExampleActivity extends AppCompatActivity {
         // Handle selection
         switch (item.getItemId()) {
             case R.id.view_rewards:
-                Intent viewRewardsIntent=new Intent(this,ViewRewardsActivity.class);
+                Intent viewRewardsIntent = new Intent(this, ViewRewardsActivity.class);
                 startActivity(viewRewardsIntent);
                 return true;
             default:
@@ -77,23 +85,24 @@ public class ExampleActivity extends AppCompatActivity {
     }
 
 
-    public void fireRewardedVisit(View sender){
+    public void fireRewardedVisit(View sender) {
         String zoneId = getString(R.string.rewarded_visit_zone_id);
         HashMap<String, String> customData = new HashMap<>();
-        customData.put("rewardType" , "gold");
-        customData.put("rewardValue" ,"100");
+        customData.put("rewardType", "gold");
+        customData.put("rewardValue", "100");
 
-        final Activity activity=this;
+        final Activity activity = this;
 
 
         PwRewardedVideoAd rewardedVideoAd = PwRewardedVideoAd.getInstance(this, zoneId);
+        //rewardedVideoAd.setTestMode(true);
         rewardedVideoAd.setKeywords(Arrays.asList("keyword1", "keyword2"));
         rewardedVideoAd.setUserId("5487G54d30OsdZt79");
         rewardedVideoAd.setCustomData(customData);
         rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
             @Override
             public void rewardedVideoDidLoad(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
-                if(rewardedVideoAd != null){
+                if (rewardedVideoAd != null) {
                     rewardedVideoAd.show();
                 }
             }
@@ -126,12 +135,22 @@ public class ExampleActivity extends AppCompatActivity {
 
                 showDialog(message);
             }
+
+            @Override
+            public void onCacheCompleted(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+
+            }
+
+            @Override
+            public void onCacheProgress(PwRewardedVideoAd rewardedVideoAd, int percentageCompleted) {
+
+            }
         });
 
         rewardedVideoAd.load();
     }
 
-    private void showDialog(String message){
+    private void showDialog(String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

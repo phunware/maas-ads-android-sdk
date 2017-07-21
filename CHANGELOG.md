@@ -1,6 +1,12 @@
 MaaSAdvertising Change Log
 ==========================
 
+Version 2.4.3 *(2017-07-21)*
+----------------------------
+* Improved response header handling.
+* Fixed crashes due to unhandled intents.
+* New methods in Ad listeners to monitor media caching .
+
 Version 2.4.2 *(2017-05-15)*
 ----------------------------
 * Added support for caching to internal storage which does not require any permissions.

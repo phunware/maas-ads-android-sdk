@@ -93,7 +93,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:id="@+id/native_ad_view_placeholder"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

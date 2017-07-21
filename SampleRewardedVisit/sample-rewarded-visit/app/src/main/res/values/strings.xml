@@ -54,10 +54,11 @@
         to earn rewards.
     </string>
 
+
     <string name="app_id">Your APP ID</string>
     <string name="access_key">Your Access Key</string>
     <string name="sig_key">Your Signature Key</string>
-
     <string name="encrypt_key"> </string>
+
 
 </resources>

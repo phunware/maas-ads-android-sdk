@@ -43,4 +43,6 @@
         <item>3 Up Right</item>
     </string-array>
     <string name="rewarded">Congratulations, you have earned %1$s.\nAmount: %2$o.\nRemaining Views: %3$o</string>
+
+
 </resources>

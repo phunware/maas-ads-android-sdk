@@ -4,7 +4,7 @@
 MaaS Advertising SDK for Android
 ================
 
-Version 2.4.2
+Version 2.4.3
 
 This is Phunware's Android SDK for the MaaS Advertising module. Visit http://maas.phunware.com/ for more details and to sign up.
 
@@ -30,7 +30,7 @@ Installation
 
 To use Advertising SDK include the following dependency:
 ````
-compile ('com.phunware.advertising:ads:2.4.2:release@aar'){
+compile ('com.phunware.advertising:ads:2.4.3:release@aar'){
         transitive = true;
 }
 ````
@@ -59,9 +59,9 @@ Documentation is included in HTML format in the `Docs` folder and [zipped](https
 Integration
 -----------
 
-Version 2.4.2 added support for caching to internal storage which does not require any permissions. 
+Ads SDK supports caching to internal storage which does not require any permissions.
 
-This SDK supports Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.
+It also supports Rewarded Visit and its ad experience, which utilizes the Mobile Engagement SDK to coordinate geofence entry campaigns with Rewarded Video advertisement campaigns.
 
 Please see https://developer.phunware.com/pages/viewpage.action?pageId=3411004 for more details on integrating this feature.
 
@@ -186,7 +186,7 @@ HashMap<String, String> customData = new HashMap<>();
 rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
             @Override
             public void rewardedVideoDidLoad(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
-                rewardedVideoAd.show();
+
             }
 
             @Override
@@ -210,11 +210,23 @@ rewardedVideoAd.setListener(new PwRewardedVideoAd.PwRewardedVideoAdListener() {
             @Override
             public void rewardedVideoDidEndPlaybackSuccessfully(PwRewardedVideoAd rewardedVideoAd, RVSuccessInfo rewardedVideoSuccessInfo, TVASTRewardedVideoInfo rewardedVideoInfo) {
             
-            Log.d("REWARD:", rewardedVideoSuccessInfo.getCurrencyId());
-            Log.d("AMOUNT:", String.valueOf(rewardedVideoSuccessInfo.getAmount()));
-            
-            //Remaining views after video completes.
-            Log.d("REMAINING VIEWS:", String.valueOf(rewardedVideoSuccessInfo.getRemainingViews()));
+                Log.d("REWARD:", rewardedVideoSuccessInfo.getCurrencyId());
+                Log.d("AMOUNT:", String.valueOf(rewardedVideoSuccessInfo.getAmount()));
+
+                //Remaining views after video completes.
+                Log.d("REMAINING VIEWS:", String.valueOf(rewardedVideoSuccessInfo.getRemainingViews()));
+            }
+
+            @Override
+            public void onCacheCompleted(PwRewardedVideoAd rewardedVideoAd, TVASTRewardedVideoInfo rewardedVideoInfo) {
+                if (rewardedVideoAd != null) {
+                    rewardedVideoAd.show();
+                }
+            }
+
+            @Override
+            public void onCacheProgress(PwRewardedVideoAd rewardedVideoAd, int percentageCompleted) {
+
             }
         });
 
@@ -230,26 +242,7 @@ PwAdvertisingModule pwAdModule=PwAdvertisingModule.getInstance();
 pwAdModule.setAdsCacheSize(this, 0);
 ````
 
-Progress of caching the media can be tracked by using cache listener. 
-Usage is as follows.
-
-````java
-PwRewardedVideoAd rewardedVideoAd = PwRewardedVideoAd.getInstance(this, "YOUR_REWARDED_VIDEO_ZONE_ID");
-rewardedVideoAd.setUserId("YOUR_LOCAL_PLAYER_ID"); //This is required.
-
-//Add cache listener
-rewardedVideoAd.setCacheListener(new PwAdCacheListener() {
-            @Override
-            public void onCacheCompleted() {
-		//App specific action
-            }
-
-            @Override
-            public void onCacheProgress(int percentageCompleted) {
-                //App specific action like Update a progress bar 
-            }
-        });
-````
+Progress of caching the media can be tracked by using methods in ad listeners.
 
 
 ### Native Ad Usage
