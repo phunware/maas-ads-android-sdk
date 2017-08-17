@@ -47,12 +47,12 @@ Update your `AndroidManifest.xml` to include the following permissions and activ
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
 ````
-See [AndroidManifest.xml](sample/src/main/AndroidManifest.xml) for an example manifest file.
+See [AndroidManifest.xml](Sample/sample/src/main/AndroidManifest.xml) for an example manifest file.
 
 Documentation
 ------------
 
-Documentation is included in HTML format in the `Docs` folder and [zipped](https://github.com/phunware/maas-ads-android-sdk/blob/master/MaaSAdvertising-javadoc.zip?raw=true) as well.
+Documentation is included in HTML format in the `Docs` folder.
 
 
 
@@ -109,7 +109,7 @@ bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 bannerAdView.set3dAnimation(true); // set true if you want the rotation with a 3D animation. False by default.
 ````
 
-An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Interstitial Usage
@@ -126,7 +126,7 @@ PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, "YOUR_INTER
 interstitialAd.show();
 ````
 
-An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Landing Page Usage
@@ -143,7 +143,7 @@ PwLandingPageAd landingPage = PwLandingPageAd.getInstance(this, "YOUR_ZONE_ID");
 landingPage.show();
 ````
 
-An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Video Ads Usage
@@ -160,7 +160,7 @@ import com.phunware.advertising.*;
 PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-An advanced implementation can be found in the [example code](sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Rewarded Video Ad
