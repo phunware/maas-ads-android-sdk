@@ -109,7 +109,7 @@ bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 bannerAdView.set3dAnimation(true); // set true if you want the rotation with a 3D animation. False by default.
 ````
 
-An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Interstitial Usage
@@ -126,7 +126,7 @@ PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, "YOUR_INTER
 interstitialAd.show();
 ````
 
-An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Landing Page Usage
@@ -143,7 +143,7 @@ PwLandingPageAd landingPage = PwLandingPageAd.getInstance(this, "YOUR_ZONE_ID");
 landingPage.show();
 ````
 
-An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Video Ads Usage
@@ -160,7 +160,7 @@ import com.phunware.advertising.*;
 PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-An advanced implementation can be found in the [example code](Sample/sample/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Rewarded Video Ad
