@@ -47,7 +47,7 @@ Update your `AndroidManifest.xml` to include the following permissions and activ
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
 ````
-See [AndroidManifest.xml](Sample/sample/src/main/AndroidManifest.xml) for an example manifest file.
+See [AndroidManifest.xml](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/AndroidManifest.xml) for an example manifest file.
 
 Documentation
 ------------
@@ -339,7 +339,7 @@ adLoader.loadAds(context, numberOfAdsToLoad,
 
 The sample code provides example views for News Feed, App Wall, Content Stream, and Content Wall.
 Code samples and advanced implementation examples can be found in the
-[native ad examples library](nativeads) which is included with the SDK sample app.
+[native ad example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/NativeAdActivity.java) which is included with the SDK sample app.
 
 
 ### Location Data
