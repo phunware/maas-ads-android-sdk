@@ -47,7 +47,7 @@ Update your `AndroidManifest.xml` to include the following permissions and activ
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
 ````
-See [AndroidManifest.xml](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/AndroidManifest.xml) for an example manifest file.
+See [AndroidManifest.xml](./samples/java/AdsSample/app/src/main/AndroidManifest.xml) for an example manifest file.
 
 Documentation
 ------------
@@ -109,7 +109,7 @@ bannerAdView.startRequestingAdsForZone("YOUR_BANNER_ZONE_ID");
 bannerAdView.set3dAnimation(true); // set true if you want the rotation with a 3D animation. False by default.
 ````
 
-An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](./samples/java/AdsSample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Interstitial Usage
@@ -126,7 +126,7 @@ PwInterstitialAd interstitialAd = PwInterstitialAd.getInstance(this, "YOUR_INTER
 interstitialAd.show();
 ````
 
-An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](./samples/java/AdsSample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Landing Page Usage
@@ -143,7 +143,7 @@ PwLandingPageAd landingPage = PwLandingPageAd.getInstance(this, "YOUR_ZONE_ID");
 landingPage.show();
 ````
 
-An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](./samples/java/AdsSample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Video Ads Usage
@@ -160,7 +160,7 @@ import com.phunware.advertising.*;
 PwVideoInterstitialAd videoAd = PwVideoInterstitialAd.getInstance(this, "YOUR_VIDEO_ZONE_ID");
 videoAd.show();
 ````
-An advanced implementation can be found in the [example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
+An advanced implementation can be found in the [example code](./samples/java/AdsSample/app/src/main/java/com/phunware/advertising/sample/ExampleActivity.java).
 
 
 ### Rewarded Video Ad
@@ -339,7 +339,7 @@ adLoader.loadAds(context, numberOfAdsToLoad,
 
 The sample code provides example views for News Feed, App Wall, Content Stream, and Content Wall.
 Code samples and advanced implementation examples can be found in the
-[native ad example code](https://github.com/phunware/maas-ads-android-sdk/blob/master/Sample/sample/app/src/main/java/com/phunware/advertising/sample/NativeAdActivity.java) which is included with the SDK sample app.
+[native ad example code](./samples/java/AdsSample/app/src/main/java/com/phunware/advertising/sample/NativeAdActivity.java) which is included with the SDK sample app.
 
 
 ### Location Data

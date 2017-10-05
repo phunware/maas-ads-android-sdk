@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/pw_logo_small" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:rowCount="3">
+
+        <Button
+            android:id="@+id/interstitialButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fireInterstitial"
+            android:text="@string/interstitial" />
+
+        <Button
+            android:id="@+id/videoInterstitialButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fireVideoInterstitial"
+            android:text="@string/video" />
+
+        <Button
+            android:id="@+id/rewardedVideoButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fireRewardedVideo"
+            android:text="@string/rewardedVideo" />
+
+        <Button
+            android:id="@+id/lpageButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fireLandingPage"
+            android:text="@string/landing_page" />
+
+        <Button
+            android:id="@+id/bannerButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fireBanner"
+            android:text="@string/banner" />
+
+        <Button
+            android:id="@+id/banner3dButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fire3dBanner"
+            android:text="@string/banner3d" />
+
+    </GridLayout>
+
+    <FrameLayout
+        android:id="@+id/native_ad_view_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- With fixed size view, if ad content does not match the view size, the content is centered in the view -->
+    <com.phunware.advertising.PwBannerAdView
+        android:id="@+id/bannerAdView"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
