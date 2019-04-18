@@ -1,0 +1,1 @@
+[{"outputType":{"type":"INSTANT_APP_MANIFEST"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1123,"versionName":"2.33.1","enabled":true,"outputFile":"sample-debug.apk","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.phunware.android.sdk.sample","split":"","minSdkVersion":"14"}}]
