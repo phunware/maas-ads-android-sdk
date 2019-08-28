@@ -29,5 +29,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.appcompatV7
     implementation rootProject.ext.playServicesAds
-    implementation 'com.phunware.advertising:ads:4.0.0'
+    implementation 'com.phunware.advertising:ads:4.0.1'
 }

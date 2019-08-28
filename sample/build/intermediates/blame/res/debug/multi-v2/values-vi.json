@@ -4,24 +4,7 @@
             "outputFile": "/Development/public-github-repos/maas-ads-android-sdk/sample/build/intermediates/incremental/mergeDebugResources/merged.dir/values-vi/values-vi.xml",
             "map": [
                 {
-                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/4486951df4c7ac76d7542f667090672d/res/values-vi/values-vi.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,219,327,436,520,623,742,819,896,980,1084,1193,1294,1399,1513,1618,1775,1874",
-                        "endColumns": "113,107,108,83,102,118,76,76,83,103,108,100,104,113,104,156,98,83",
-                        "endOffsets": "214,322,431,515,618,737,814,891,975,1079,1188,1289,1394,1508,1613,1770,1869,1953"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,27",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,219,327,436,520,623,742,819,896,980,1084,1193,1294,1399,1513,1618,1775,2657",
-                        "endColumns": "113,107,108,83,102,118,76,76,83,103,108,100,104,113,104,156,98,83",
-                        "endOffsets": "214,322,431,515,618,737,814,891,975,1079,1188,1289,1394,1508,1613,1770,1869,2736"
-                    }
-                },
-                {
-                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/41dd3c895a32531e5f19d3f6a5ac45e5/res/values-vi/values.xml",
+                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-2/files-2.1/c5a037b934f2f28cf6a996ccd79ba8d0/res/values-vi/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -38,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/d0134f17c07a02d4e18872ea1aa1dedc/res/values-vi/values-vi.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "28",
-                        "startColumns": "4",
-                        "startOffsets": "2741",
-                        "endColumns": "100",
-                        "endOffsets": "2837"
-                    }
-                },
-                {
-                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-1/files-1.1/play-services-ads-11.8.0.aar/79db953b66d4d81246e1ce22a59ae2d3/res/values-vi/values.xml",
+                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-2/files-2.1/c4a7743ec273bb8c6b75843df258a50c/res/values-vi/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10",
                         "startColumns": "0,0,0,0,0,0,0",
@@ -69,6 +35,40 @@
                         "startOffsets": "2069,2142,2259,2330,2399,2477,2575",
                         "endColumns": "72,116,70,68,77,97,81",
                         "endOffsets": "2137,2254,2325,2394,2472,2570,2652"
+                    }
+                },
+                {
+                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-2/files-2.1/330108e9957b06cf7abcf7a861543845/res/values-vi/values-vi.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,219,327,436,520,623,742,819,896,980,1084,1193,1294,1399,1513,1618,1775,1874",
+                        "endColumns": "113,107,108,83,102,118,76,76,83,103,108,100,104,113,104,156,98,83",
+                        "endOffsets": "214,322,431,515,618,737,814,891,975,1079,1188,1289,1394,1508,1613,1770,1869,1953"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,27",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,219,327,436,520,623,742,819,896,980,1084,1193,1294,1399,1513,1618,1775,2657",
+                        "endColumns": "113,107,108,83,102,118,76,76,83,103,108,100,104,113,104,156,98,83",
+                        "endOffsets": "214,322,431,515,618,737,814,891,975,1079,1188,1289,1394,1508,1613,1770,1869,2736"
+                    }
+                },
+                {
+                    "source": "/Users/anuvakkachen/.gradle/caches/transforms-2/files-2.1/77d6723f03d867b115db4f981a8af7ef/res/values-vi/values-vi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "28",
+                        "startColumns": "4",
+                        "startOffsets": "2741",
+                        "endColumns": "100",
+                        "endOffsets": "2837"
                     }
                 }
             ]

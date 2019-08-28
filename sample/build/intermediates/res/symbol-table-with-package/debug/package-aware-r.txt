@@ -608,6 +608,7 @@ id bottom
 id btnBackground
 id btnGetBanner
 id btnGetInterstitial
+id btnGetVASTVideo
 id btn_back
 id btn_close
 id btn_forward

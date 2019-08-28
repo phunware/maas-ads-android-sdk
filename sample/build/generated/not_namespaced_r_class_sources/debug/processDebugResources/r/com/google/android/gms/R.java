@@ -19,12 +19,12 @@ public final class R {
     public static final class id {
         private id() {}
 
-        public static final int none = 0x7f07004a;
-        public static final int normal = 0x7f07004b;
-        public static final int radio = 0x7f070054;
-        public static final int text = 0x7f070073;
-        public static final int text2 = 0x7f070074;
-        public static final int wrap_content = 0x7f070086;
+        public static final int none = 0x7f07004b;
+        public static final int normal = 0x7f07004c;
+        public static final int radio = 0x7f070055;
+        public static final int text = 0x7f070074;
+        public static final int text2 = 0x7f070075;
+        public static final int wrap_content = 0x7f070087;
     }
     public static final class integer {
         private integer() {}
