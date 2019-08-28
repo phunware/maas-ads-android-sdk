@@ -1,4 +1,0 @@
-#Wed Aug 28 09:41:26 CDT 2019
-base.0=/Development/public-github-repos/maas-ads-android-sdk/sample/build/intermediates/dex/debug/mergeDexDebug/out
-path.0=classes.dex
-renamed.0=classes.dex
